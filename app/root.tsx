@@ -24,7 +24,11 @@ export default function AppWithProviders() {
     </ThemeProvider>
   );
 }
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }, ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : [])];
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+  { rel: "preload", as: "font", href: "/fonts/InterVariable.woff2", type: "font/woff2", crossOrigin: "anonymous" },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+];
 
 export function App() {
   const data = useLoaderData<typeof loader>();
