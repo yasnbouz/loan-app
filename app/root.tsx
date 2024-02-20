@@ -26,7 +26,7 @@ export default function AppWithProviders() {
 }
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
-  { rel: "preload", as: "font", href: "/fonts/InterVariable.woff2", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "preload", as: "font", href: "/fonts/InterVariable-subset.woff2", type: "font/woff2", crossOrigin: "anonymous" },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 

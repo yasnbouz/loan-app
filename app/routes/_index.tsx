@@ -1,3 +1,4 @@
+import Hero from "@/components/hero";
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import type { MetaFunction } from "@remix-run/node";
@@ -10,7 +11,9 @@ export default function Index() {
   return (
     <div className="flex flex-col min-h-dvh">
       <Header />
-      <main className="flex-1 bg-background"></main>
+      <main className="flex-1 bg-background">
+        <Hero />
+      </main>
       <Footer />
     </div>
   );
