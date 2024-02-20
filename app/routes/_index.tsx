@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
@@ -8,30 +8,10 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="container">
-      <h1 className="text-3xl box font-bold underline">Hello world!</h1>
-      <Button variant={"ghost"}>hello</Button>
-      <br />
-      <br />
-      <br />
-      <ModeToggle />
-      <ul>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/blog" rel="noreferrer">
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/jokes" rel="noreferrer">
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="flex flex-col min-h-dvh">
+      <Header />
+      <main className="flex-1"></main>
+      <Footer />
     </div>
   );
 }

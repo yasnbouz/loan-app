@@ -13,7 +13,7 @@
 @layer base {
   :root {
     --font-sans: InterVariable;
-    
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -84,4 +84,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+:focus:not(:focus-visible) {
+  box-shadow: none;
+  outline: 0;
 }
