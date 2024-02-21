@@ -1,6 +1,7 @@
 import Brands from "@/components/brands";
 import Hero from "@/components/hero";
 import Requirements from "@/components/requirements";
+import Reviews from "@/components/reviews";
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import TrustUs from "@/components/trust-us";
@@ -19,6 +20,7 @@ export default function Index() {
         <TrustUs />
         {/* <Brands /> */}
         <Requirements />
+        <Reviews />
       </main>
       <Footer />
     </div>
