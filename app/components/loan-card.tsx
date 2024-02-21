@@ -59,7 +59,7 @@ export function LoanCard() {
   const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 12.9, monthsSlider);
 
   return (
-    <Card className="">
+    <Card>
       <CardHeader>
         <CardTitle>Personal loan simulator</CardTitle>
         <CardDescription>Deploy your new project in one-click.</CardDescription>

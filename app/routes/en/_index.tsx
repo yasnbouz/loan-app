@@ -1,3 +1,4 @@
+import Brands from "@/components/brands";
 import Hero from "@/components/hero";
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
@@ -12,9 +13,10 @@ export default function Index() {
   return (
     <div className="flex flex-col min-h-dvh">
       <Header />
-      <main className="flex-1 bg-background">
+      <main className="flex-1">
         <Hero />
         <TrustUs />
+        {/* <Brands /> */}
       </main>
       <Footer />
     </div>

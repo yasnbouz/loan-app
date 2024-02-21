@@ -2,7 +2,7 @@ import { LoanCard } from "@/components/loan-card";
 
 export default function Hero() {
   return (
-    <div className="bg-background">
+    <div>
       <div className="relative isolate overflow-hidden">
         <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-5 lg:gap-x-8 lg:px-8 lg:py-40">
           <div className="px-6 lg:px-0 lg:pt-4 lg:col-span-2">
