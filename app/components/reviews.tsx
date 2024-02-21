@@ -56,7 +56,7 @@ export default function Reviews() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-lg font-semibold leading-8 tracking-tight text-primary">Testimonials</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">We have worked with thousands of amazing people</p>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">98% of satisfied customers last year</p>
         </div>
         <div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
           <div className="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-3">

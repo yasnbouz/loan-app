@@ -1,4 +1,5 @@
 import Brands from "@/components/brands";
+import FAQS from "@/components/faqs";
 import Hero from "@/components/hero";
 import Requirements from "@/components/requirements";
 import Reviews from "@/components/reviews";
@@ -21,6 +22,7 @@ export default function Index() {
         {/* <Brands /> */}
         <Requirements />
         <Reviews />
+        <FAQS />
       </main>
       <Footer />
     </div>
