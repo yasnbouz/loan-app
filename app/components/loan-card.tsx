@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { calculateAmortizedLoan } from "@/lib/utils";
 import { useState } from "react";
-import { addMonths, format, monthsToYears } from "date-fns";
+import { addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
 
@@ -56,8 +56,8 @@ export function LoanCard() {
     }
   }
   /***********calculate loan************ */
-  const amountOfYears = monthsToYears(monthsSlider);
-  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 12.9, amountOfYears);
+  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 12.9, monthsSlider);
+
   return (
     <Card className="">
       <CardHeader>
@@ -147,7 +147,7 @@ function MonthsField({ monthsSlider, monthsInput, handleMonthsSliderChange, onMo
     <div className="flex flex-col gap-y-4 md:gap-0">
       <Label htmlFor="loan">How many months?</Label>
       <div className="grid gap-4 md:grid-cols-4">
-        <Slider id="loan" className="md:col-span-3" value={[monthsSlider]} min={12} max={60} onValueChange={(value) => handleMonthsSliderChange(value[0])} />
+        <Slider id="loan" className="md:col-span-3" step={6} value={[monthsSlider]} min={12} max={60} onValueChange={(value) => handleMonthsSliderChange(value[0])} />
         <div className="flex items-center gap-2">
           <Input
             type="text"

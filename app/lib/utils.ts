@@ -12,14 +12,11 @@ export const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-export function calculateAmortizedLoan(principal: number, interestRate: number, termInYears: number) {
+export function calculateAmortizedLoan(principal: number, interestRate: number, termInMonths: number) {
   // Input validation for numerical values
-  if (isNaN(principal) || isNaN(interestRate) || isNaN(termInYears)) {
+  if (isNaN(principal) || isNaN(interestRate) || isNaN(termInMonths)) {
     return { error: "Invalid input: All values must be numbers." };
   }
-
-  // Convert term to months
-  const termInMonths = termInYears * 12;
 
   // Calculate monthly interest rate
   const monthlyInterestRate = interestRate / 100 / 12;
