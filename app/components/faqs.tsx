@@ -1,5 +1,3 @@
-import { Disclosure } from "@headlessui/react";
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
@@ -47,7 +45,7 @@ export default function FAQS() {
           <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
             <Accordion type="single" collapsible>
               {faqs.map((faq) => (
-                <AccordionItem value={faq.question}>
+                <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger className="font-semibold leading-7">{faq.question}</AccordionTrigger>
                   <AccordionContent className="leading-7 text-muted-foreground">{faq.answer}</AccordionContent>
                 </AccordionItem>
