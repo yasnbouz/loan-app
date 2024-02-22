@@ -61,10 +61,9 @@ export function LoanCard() {
   /**********optimist ui************* */
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/?index";
-  console.log(navigation);
 
   return (
-    <Form method="post">
+    <Form method="post" action="/?index">
       <Card>
         <CardHeader>
           <CardTitle>Personal loan simulator</CardTitle>
