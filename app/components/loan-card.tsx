@@ -8,7 +8,7 @@ import { useState } from "react";
 import { addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 
 export function LoanCard() {
   /************* loan logic *********** */
@@ -38,7 +38,7 @@ export function LoanCard() {
     minMonths = 12;
   const [monthsSlider, setMonthsSlider] = useState(minMonths);
   const [monthsInput, setMonthsInput] = useState(minMonths);
-  const moneyBack = format(addMonths(new Date(), monthsSlider), "d 'de' MMMM 'de' y", { locale: es });
+  const dateOfReturn = format(addMonths(new Date(), monthsSlider), "d 'de' MMMM 'de' y", { locale: es });
 
   function handleMonthsSliderChange(month: number) {
     setMonthsSlider(month);
@@ -58,15 +58,19 @@ export function LoanCard() {
   }
   /***********calculate loan************ */
   const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 12.9, monthsSlider);
+  /**********optimist ui************* */
+  const navigation = useNavigation();
+  const isSubmitting = navigation.formAction === "/?index";
+  console.log(navigation);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Personal loan simulator</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
+    <Form method="post">
+      <Card>
+        <CardHeader>
+          <CardTitle>Personal loan simulator</CardTitle>
+          <CardDescription>Deploy your new project in one-click.</CardDescription>
+        </CardHeader>
+        <CardContent>
           <div className="grid w-full items-center gap-4">
             <LoanField
               loanInput={loanInput}
@@ -88,7 +92,9 @@ export function LoanCard() {
                 <p className="text-2xl">
                   {monthlyPayment} &euro;<span className="text-sm">/month</span>
                 </p>
+                <input type="hidden" name="monthlyQuota" value={monthlyPayment} />
                 <span className="text-sm font-medium text-muted-foreground"> Total due {total} &euro;</span>
+                <input type="hidden" name="total" value={total} />
               </div>
             </div>
             <Separator />
@@ -96,6 +102,7 @@ export function LoanCard() {
               <div className="flex justify-between">
                 <p>Inetest</p>
                 <span className="font-bold">{totalInterest} &euro;</span>
+                <input type="hidden" name="interest" value={totalInterest} />
               </div>
               <div className="flex justify-between">
                 <p>Amount of the loan</p>
@@ -103,7 +110,8 @@ export function LoanCard() {
               </div>
               <div className="flex justify-between">
                 <p>Date of return</p>
-                <time className="font-medium">{moneyBack}</time>
+                <time className="font-medium">{dateOfReturn}</time>
+                <input type="hidden" name="dateOfReturn" value={dateOfReturn} />
               </div>
               <div className="flex justify-between">
                 <p>TIN 12,90%</p>
@@ -115,14 +123,14 @@ export function LoanCard() {
               </div>
             </div>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button asChild isFullWidth>
-          <Link to={"/signup"}>Continue</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button disabled={isSubmitting} type="submit" isFullWidth className="font-bold">
+            {isSubmitting ? "Loading..." : "Start"}
+          </Button>
+        </CardFooter>
+      </Card>
+    </Form>
   );
 }
 function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputBlur, setLoanInput }: Record<string, any>) {
@@ -130,7 +138,7 @@ function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputB
     <div className="flex flex-col gap-y-4 md:gap-y-0">
       <Label htmlFor="loan">How much you need?</Label>
       <div className="grid gap-4 md:grid-cols-4">
-        <Slider id="loan" className="col-span-3" value={[loanSlider]} step={500} min={4000} max={35000} onValueChange={(value) => handleLoanSliderChange(value[0])} />
+        <Slider id="loan" name="loan" className="col-span-3" value={[loanSlider]} step={500} min={4000} max={35000} onValueChange={(value) => handleLoanSliderChange(value[0])} />
         <div className="flex items-center gap-2">
           <Input
             type="text"
@@ -148,9 +156,18 @@ function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputB
 function MonthsField({ monthsSlider, monthsInput, handleMonthsSliderChange, onMonthsInputBlur, setMonthsInput }: Record<string, any>) {
   return (
     <div className="flex flex-col gap-y-4 md:gap-0">
-      <Label htmlFor="loan">How many months?</Label>
+      <Label htmlFor="months">How many months?</Label>
       <div className="grid gap-4 md:grid-cols-4">
-        <Slider id="loan" className="md:col-span-3" step={6} value={[monthsSlider]} min={12} max={60} onValueChange={(value) => handleMonthsSliderChange(value[0])} />
+        <Slider
+          id="months"
+          name="months"
+          className="md:col-span-3"
+          step={6}
+          value={[monthsSlider]}
+          min={12}
+          max={60}
+          onValueChange={(value) => handleMonthsSliderChange(value[0])}
+        />
         <div className="flex items-center gap-2">
           <Input
             type="text"

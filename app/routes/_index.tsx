@@ -1,30 +1,48 @@
+import { loanSessionStorage } from "@/.server/sessions";
 import Brands from "@/components/brands";
 import FAQS from "@/components/faqs";
 import Hero from "@/components/hero";
 import Requirements from "@/components/requirements";
 import Reviews from "@/components/reviews";
-import Footer from "@/components/shared/footer";
-import Header from "@/components/shared/header";
 import TrustUs from "@/components/trust-us";
-import type { MetaFunction } from "@remix-run/node";
+import { redirect, type MetaFunction } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }];
+  return [{ title: "Request your Online Personal Loan" }, { name: "description", content: "Welcome to Remix!" }];
 };
+export async function action({ request }: ActionFunctionArgs) {
+  const formaData = await request.formData();
+  const session = await loanSessionStorage.getSession(request.headers.get("Cookie"));
 
-export default function Index() {
+  const loan = formaData.get("loan");
+  session.set("loan", loan);
+
+  const months = formaData.get("months");
+  session.set("months", months);
+
+  const monthlyQuota = formaData.get("monthlyQuota");
+  session.set("monthlyQuota", monthlyQuota);
+
+  const total = formaData.get("total");
+  session.set("total", total);
+
+  const interest = formaData.get("interest");
+  session.set("interest", interest);
+
+  const dateOfReturn = formaData.get("dateOfReturn");
+  session.set("dateOfReturn", dateOfReturn);
+  return redirect("/join", { headers: { "Set-Cookie": await loanSessionStorage.commitSession(session) } });
+}
+export default function Home() {
   return (
-    <div className="flex flex-col min-h-dvh">
-      <Header />
-      <main className="flex-1">
-        <Hero />
-        <TrustUs />
-        {/* <Brands /> */}
-        <Requirements />
-        <Reviews />
-        <FAQS />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Hero />
+      <TrustUs />
+      {/* <Brands /> */}
+      <Requirements />
+      <Reviews />
+      <FAQS />
+    </>
   );
 }

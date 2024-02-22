@@ -1,9 +1,16 @@
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
 import styles from "./styles/tailwind.css?url";
-import clsx from "clsx";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
-import { themeSessionResolver } from "./sessions.server";
+import { themeSessionResolver } from "./.server/sessions";
+import Header from "@/components/shared/header";
+import Footer from "@/components/shared/footer";
+import { cn } from "@/lib/utils";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+  { rel: "preload", as: "font", href: "/fonts/InterVariable-subset.woff2", type: "font/woff2", crossOrigin: "anonymous" },
+];
 
 // Return the theme from the session storage using the loader
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -23,16 +30,12 @@ export default function AppWithProviders() {
     </ThemeProvider>
   );
 }
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
-  { rel: "preload", as: "font", href: "/fonts/InterVariable-subset.woff2", type: "font/woff2", crossOrigin: "anonymous" },
-];
 
 export function App() {
   const data = useLoaderData<typeof loader>();
   const [theme] = useTheme();
   return (
-    <html lang="en" className={clsx(theme)}>
+    <html lang="en" className={cn(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,7 +44,13 @@ export function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <div className="flex flex-col min-h-dvh">
+          <Header />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
