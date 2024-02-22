@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Link } from "@remix-run/react";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -19,10 +20,10 @@ export default function Header() {
       <div className="fixed inset-x-0 z-10 bg-background shadow-sm border-b">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600" alt="" />
-            </a>
+            </Link>
           </div>
           <div className="flex lg:hidden">
             <Button variant={"ghost"} className="-m-2.5  p-2.5 text-foreground" onClick={() => setMobileMenuOpen(true)}>

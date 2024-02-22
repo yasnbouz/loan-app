@@ -8,6 +8,7 @@ import { useState } from "react";
 import { addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
+import { Link } from "@remix-run/react";
 
 export function LoanCard() {
   /************* loan logic *********** */
@@ -117,7 +118,9 @@ export function LoanCard() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button isFullWidth>Continue</Button>
+        <Button asChild isFullWidth>
+          <Link to={"/signup"}>Continue</Link>
+        </Button>
       </CardFooter>
     </Card>
   );
