@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { z } from "zod";
 import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
-import { TextFieldErrorMessage } from "@/components/ui/textFieldErrorMessage";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormField, Text } from "@/components/ui/form";
 
@@ -68,7 +67,7 @@ export default function SignUp() {
       <RemixForm method="post" id={form.id} onSubmit={form.onSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle>Personal loan simulation</CardTitle>
+            <CardTitle>Create your account</CardTitle>
             <CardDescription>Now we need some data</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
