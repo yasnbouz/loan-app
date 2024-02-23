@@ -1,4 +1,4 @@
-import { LoanCard } from "@/components/loan-card";
+import { LoanCard } from "@/components/loanCard";
 
 export default function Hero() {
   return (

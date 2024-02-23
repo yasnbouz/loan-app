@@ -1,17 +1,15 @@
 import { useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, MetaFunction, redirect, useActionData, useNavigation } from "@remix-run/react";
+import { Form as RemixForm, MetaFunction, redirect, useActionData, useNavigation } from "@remix-run/react";
 import { loanSessionStorage } from "@/.server/sessions";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { z } from "zod";
 import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
-import { FieldErrorMessage } from "@/components/ui/field-error";
+import { TextFieldErrorMessage } from "@/components/ui/textFieldErrorMessage";
+import { Checkbox } from "@/components/ui/checkbox";
+import { FormField, Text } from "@/components/ui/form";
 
 const schema = z
   .object({
@@ -64,66 +62,40 @@ export default function SignUp() {
   });
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/join";
-
+  console.log(fields.fullName.errors);
   return (
     <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-      <Form method="post" id={form.id} onSubmit={form.onSubmit}>
+      <RemixForm method="post" id={form.id} onSubmit={form.onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>Personal loan simulation</CardTitle>
             <CardDescription>Now we need some data</CardDescription>
-            <p>{form.errors}</p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor={fields.fullName.id}>Full Name</Label>
-              <Input type="text" name={fields.fullName.name} id={fields.fullName.id} />
-              <FieldErrorMessage>{fields.fullName.errors}</FieldErrorMessage>
+            <FormField name={fields.fullName.name} label="Full Name" error={fields.fullName.errors} />
+            <FormField name={fields.DNI.name} label="DNI" error={fields.DNI.errors} />
+            <FormField name={fields.phone.name} label="Phone" error={fields.phone.errors} />
+            <FormField name={fields.email.name} label="Email" error={fields.email.errors} />
+            <FormField type={togglePassword ? "text" : "password"} name={fields.password.name} label="Password" error={fields.password.errors} />
+            <FormField type={togglePassword ? "text" : "password"} name={fields.confirmPassword.name} label="Confirm Password" error={fields.confirmPassword.errors} />
+            <div className="flex items-center gap-x-2">
+              <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
+              <label htmlFor="showPassword" className="text-muted-foreground">
+                {togglePassword ? "Hide password" : "Show password"}
+              </label>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor={fields.DNI.id}>DNI</Label>
-              <Input type="text" name={fields.DNI.name} id={fields.DNI.id} />
-              <FieldErrorMessage>{fields.DNI.errors}</FieldErrorMessage>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={fields.phone.id}>Phone Number</Label>
-              <Input type="text" name={fields.phone.name} id={fields.phone.id} />
-              <FieldErrorMessage>{fields.phone.errors}</FieldErrorMessage>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={fields.email.id}>Email</Label>
-              <Input type="email" name={fields.email.name} id={fields.email.id} />
-              <FieldErrorMessage>{fields.email.errors}</FieldErrorMessage>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-x-4">
-              <div className="flex-1 space-y-2">
-                <Label htmlFor={fields.password.id}>Password</Label>
-                <Input type={togglePassword === false ? "password" : "text"} name={fields.password.name} id={fields.password.id} />
-                <FieldErrorMessage>{fields.password.errors}</FieldErrorMessage>
-              </div>
-              <div className="flex-1 space-y-2">
-                <Label htmlFor={fields.confirmPassword.id}>Confirm Password</Label>
-                <div className="flex">
-                  <Input type={togglePassword === false ? "password" : "text"} name={fields.confirmPassword.name} id={fields.confirmPassword.id} />
-                  <Toggle onClick={() => setTogglePassword(!togglePassword)} className="self-end">
-                    {togglePassword === true ? <EyeIcon className="w-6 h-6" /> : <EyeSlashIcon className="w-6 h-6" />}
-                  </Toggle>
-                </div>
-                <FieldErrorMessage>{fields.confirmPassword.errors}</FieldErrorMessage>
-              </div>
-            </div>
-            <FieldErrorMessage>{form.allErrors["passwordError"]}</FieldErrorMessage>
+            <Text slot="errorMessage">{form.allErrors["passwordError"]}</Text>
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button disabled={isSubmitting} type="submit">
               {isSubmitting === true ? "Creating..." : "Create Account"}
             </Button>
             <Button type="reset" variant={"outline"}>
-              Reset
+              Clear
             </Button>
           </CardFooter>
         </Card>
-      </Form>
+      </RemixForm>
     </div>
   );
 }

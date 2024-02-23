@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { ModeToggle } from "@/components/ui/modeToggle";
 import { Link } from "@remix-run/react";
 
 const navigation = [

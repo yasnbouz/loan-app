@@ -4,7 +4,7 @@ import FAQS from "@/components/faqs";
 import Hero from "@/components/hero";
 import Requirements from "@/components/requirements";
 import Reviews from "@/components/reviews";
-import TrustUs from "@/components/trust-us";
+import TrustUs from "@/components/trustUs";
 import { redirect, type MetaFunction } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
 
