@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form as RemixForm, MetaFunction, redirect, useActionData, useNavigation } from "@remix-run/react";
+import { Form as RemixForm, MetaFunction, redirect, useActionData, useNavigation, Link } from "@remix-run/react";
 import { loanSessionStorage } from "@/.server/sessions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,16 +8,18 @@ import { z } from "zod";
 import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormField, Text } from "@/components/ui/form";
+import { FormField, Text, Label } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 
 const schema = z
   .object({
-    fullName: z.string({ required_error: "Full name is required" }).min(4, "Full name must contain at least 4 character(s)"),
+    fullName: z.string({ required_error: "full name is required" }).min(4, "Full name must contain at least 4 character(s)"),
     DNI: z.string({ required_error: "DNI is required" }),
     phone: z.string({ required_error: "phone is required" }),
-    email: z.string({ required_error: "Email is required" }).email("Email is invalid"),
+    email: z.string({ required_error: "email is required" }).email("Email is invalid"),
     password: z.string({ required_error: "password is required" }),
     confirmPassword: z.string({ required_error: "confirm Password is required" }),
+    terms: z.boolean().refine((val) => val === true),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -61,7 +63,7 @@ export default function SignUp() {
   });
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/join";
-  console.log(fields.fullName.errors);
+
   return (
     <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
       <RemixForm method="post" id={form.id} onSubmit={form.onSubmit}>
@@ -71,19 +73,32 @@ export default function SignUp() {
             <CardDescription>Now we need some data</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <FormField name={fields.fullName.name} label="Full Name" error={fields.fullName.errors} />
-            <FormField name={fields.DNI.name} label="DNI" error={fields.DNI.errors} />
-            <FormField name={fields.phone.name} label="Phone" error={fields.phone.errors} />
-            <FormField name={fields.email.name} label="Email" error={fields.email.errors} />
-            <FormField type={togglePassword ? "text" : "password"} name={fields.password.name} label="Password" error={fields.password.errors} />
-            <FormField type={togglePassword ? "text" : "password"} name={fields.confirmPassword.name} label="Confirm Password" error={fields.confirmPassword.errors} />
+            <FormField field={fields.fullName} label="Full Name" />
+            <FormField field={fields.DNI} label="DNI" />
+            <FormField field={fields.phone} label="Phone" />
+            <FormField field={fields.email} label="Email" />
+            <FormField field={fields.password} type={togglePassword ? "text" : "password"} label="Password" />
+            <FormField field={fields.confirmPassword} type={togglePassword ? "text" : "password"} label="Confirm Password" />
+            {form.allErrors["passwordError"] ? (
+              <Text slot="errorMessage" className="inline-block">
+                {form.allErrors["passwordError"]}
+              </Text>
+            ) : null}
             <div className="flex items-center gap-x-2">
               <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
-              <label htmlFor="showPassword" className="text-muted-foreground">
+              <Label htmlFor="showPassword" className="text-muted-foreground">
                 {togglePassword ? "Hide password" : "Show password"}
-              </label>
+              </Label>
             </div>
-            <Text slot="errorMessage">{form.allErrors["passwordError"]}</Text>
+            <div className="flex items-center gap-x-2">
+              <Checkbox id={fields.terms.id} name={fields.terms.name} className={cn({ "border-destructive": form.allErrors["terms"] })} />
+              <Label htmlFor={fields.terms.id} className="text-muted-foreground">
+                I agree to the{" "}
+                <Link to={"#"} className="text-primary underline">
+                  BRAND Terms
+                </Link>
+              </Label>
+            </div>
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button disabled={isSubmitting} type="submit">

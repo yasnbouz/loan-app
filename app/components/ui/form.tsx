@@ -1,6 +1,7 @@
 import * as RAC from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
+import { getInputProps } from "@conform-to/react";
 
 interface InputProps extends RAC.InputProps, VariantProps<typeof inputVariants> {}
 
@@ -15,6 +16,11 @@ function Input({ className, type, ...props }: InputProps) {
   return <RAC.Input type={type} className={cn(inputVariants(), className)} {...props} />;
 }
 
+/** Label */
+function Label({ className, ...props }: RAC.LabelProps) {
+  return <RAC.Label className={cn("text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", className)} {...props} />;
+}
+
 //  Text
 
 function Text({ className, slot, ...props }: RAC.TextProps) {
@@ -24,22 +30,21 @@ function Text({ className, slot, ...props }: RAC.TextProps) {
 // form field
 
 interface FormFieldProps {
-  type?: "text" | "password";
+  type?: string;
   label: string;
-  name: string;
-  error: undefined | string[];
+  field: any;
 }
 
-function FormField({ type, label, name, error }: FormFieldProps) {
+function FormField({ type, label, field }: FormFieldProps) {
   return (
-    <RAC.TextField name={name} className="w-full space-y-2">
+    <RAC.TextField name={field.name} className="w-full space-y-2">
       <div className="flex justify-between items-baseline">
-        <RAC.Label>{label}</RAC.Label>
-        {error ? <Text slot="errorMessage">{error}</Text> : null}
+        <Label htmlFor={field.id}>{label}</Label>
+        {field.errors ? <Text slot="errorMessage">{field.errors}</Text> : null}
       </div>
-      <Input type={type} />
+      <Input {...getInputProps(field, { type: type as any })} />
     </RAC.TextField>
   );
 }
 
-export { Input, Text, FormField };
+export { Input, Text, FormField, Label };
