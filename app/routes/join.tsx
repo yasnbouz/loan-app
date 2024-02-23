@@ -19,11 +19,14 @@ const schema = z
     email: z.string({ required_error: "email is required" }).email("Email is invalid"),
     password: z.string({ required_error: "password is required" }),
     confirmPassword: z.string({ required_error: "confirm Password is required" }),
-    terms: z.boolean().refine((val) => val === true),
+    terms: z.boolean(),
   })
-  .superRefine(({ password, confirmPassword }, ctx) => {
+  .superRefine(({ password, confirmPassword, terms }, ctx) => {
     if (password !== confirmPassword) {
       ctx.addIssue({ code: z.ZodIssueCode.custom, message: "The Passwords did not match", path: ["passwordError"] });
+    }
+    if (!terms) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "You must accept the terms", path: ["terms"] });
     }
   });
 
@@ -60,6 +63,11 @@ export default function SignUp() {
   const lastResult = useActionData<typeof action>();
   const [form, fields] = useForm({
     lastResult,
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema });
+    },
   });
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/join";
