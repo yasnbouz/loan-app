@@ -38,7 +38,7 @@ interface FormFieldProps {
   placeholder?: string;
 }
 
-function FormField({ type, autoComplete, label, field, placeholder }: FormFieldProps) {
+function FormField({ type, autoComplete = "off", label, field, placeholder }: FormFieldProps) {
   return (
     <RAC.TextField name={field.name} className="w-full space-y-2">
       <div className="flex justify-between items-baseline">

@@ -38,7 +38,9 @@ export default function Header() {
             ))}
           </div>
           <div className="hidden lg:items-center lg:gap-x-3 lg:flex lg:flex-1 lg:justify-end">
-            <Button variant="outline">Sign in</Button>
+            <Button asChild variant={"outline"}>
+              <Link to="/login">Log In</Link>
+            </Button>
             <ModeToggle />
           </div>
         </nav>
@@ -66,9 +68,9 @@ export default function Header() {
                 ))}
               </div>
               <div className="py-6 flex items-center justify-between">
-                <a href="#" className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-foreground hover:bg-background">
-                  Sign in
-                </a>
+                <Button asChild variant={"outline"}>
+                  <Link to="/login">Log In</Link>
+                </Button>
                 <ModeToggle />
               </div>
             </div>

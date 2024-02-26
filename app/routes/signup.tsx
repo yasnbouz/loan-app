@@ -11,14 +11,15 @@ import { useForm } from "@conform-to/react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormField, Text, Label } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const schema = z
   .object({
-    fullName: z.string().min(4, "full name must contain at least 4 character(s)"),
+    fullName: z.string().min(4, "must contain at least 4 character(s)"),
     DNI: z.string(),
     phone: z.string(),
-    email: z.string().email("Email is invalid"),
-    password: z.string().min(6),
+    email: z.string().email("email is invalid"),
+    password: z.string().min(6, "must contain at least 6 character(s)"),
     confirmPassword: z.string().min(6),
     terms: z
       .boolean()
@@ -27,7 +28,7 @@ const schema = z
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "The Passwords did not match", path: ["passwordError"] });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "The Passwords did not match", path: ["passwordNotMatch"] });
     }
   });
 
@@ -76,8 +77,9 @@ export async function action({ request }: ActionFunctionArgs) {
   if (loanResult.error) {
     throw new Error(loanResult.error.message, { cause: loanResult.error });
   }
+  // delete loan metdata session
 
-  return redirect("/login");
+  return redirect("/login", { headers: { "Set-Cookie": await loanSessionStorage.destroySession(session) } });
 }
 
 export default function SignUp() {
@@ -109,10 +111,13 @@ export default function SignUp() {
             <FormField field={fields.email} autoComplete="email" placeholder="info@example.com" type="email" label="Email" />
             <FormField field={fields.password} type={togglePassword ? "text" : "password"} label="Password" />
             <FormField field={fields.confirmPassword} type={togglePassword ? "text" : "password"} label="Confirm Password" />
-            {form.allErrors["passwordError"] ? (
-              <Text slot="errorMessage" className="inline-block">
-                {form.allErrors["passwordError"]}
-              </Text>
+            {form.allErrors["passwordNotMatch"] ? (
+              <div className="flex gap-x-2 items-center ">
+                <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
+                <Text slot="errorMessage" className="">
+                  {form.allErrors["passwordNotMatch"]}
+                </Text>
+              </div>
             ) : null}
             <div className="flex items-center gap-x-2">
               <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
