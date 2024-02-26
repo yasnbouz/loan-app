@@ -2,7 +2,7 @@ import { createClient } from "@/.server/supabase";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 export async function loader({ request }: LoaderFunctionArgs) {
   const supabase = await createClient(request);
-  const { data, error } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getSession();
 
   console.log({ data, error });
   return {};
