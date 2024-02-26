@@ -15,14 +15,14 @@ export async function action({ request }: ActionFunctionArgs) {
   const formaData = await request.formData();
   const session = await loanSessionStorage.getSession(request.headers.get("Cookie"));
 
-  const loan = formaData.get("loan");
-  session.set("loan", loan);
+  const amount = formaData.get("amount");
+  session.set("amount", amount);
 
   const months = formaData.get("months");
   session.set("months", months);
 
-  const monthlyQuota = formaData.get("monthlyQuota");
-  session.set("monthlyQuota", monthlyQuota);
+  const monthly_quota = formaData.get("monthly_quota");
+  session.set("monthly_quota", monthly_quota);
 
   const total = formaData.get("total");
   session.set("total", total);
@@ -30,9 +30,9 @@ export async function action({ request }: ActionFunctionArgs) {
   const interest = formaData.get("interest");
   session.set("interest", interest);
 
-  const dateOfReturn = formaData.get("dateOfReturn");
-  session.set("dateOfReturn", dateOfReturn);
-  return redirect("/join", { headers: { "Set-Cookie": await loanSessionStorage.commitSession(session) } });
+  const date_of_return = formaData.get("date_of_return");
+  session.set("date_of_return", date_of_return);
+  return redirect("/signup", { headers: { "Set-Cookie": await loanSessionStorage.commitSession(session) } });
 }
 export default function Home() {
   return (

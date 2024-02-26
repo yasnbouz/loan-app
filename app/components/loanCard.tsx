@@ -91,7 +91,7 @@ export function LoanCard() {
                 <p className="text-2xl">
                   {monthlyPayment} &euro;<span className="text-sm">/month</span>
                 </p>
-                <input type="hidden" name="monthlyQuota" value={monthlyPayment} />
+                <input type="hidden" name="monthly_quota" value={monthlyPayment} />
                 <span className="text-sm font-medium text-muted-foreground"> Total due {total} &euro;</span>
                 <input type="hidden" name="total" value={total} />
               </div>
@@ -110,7 +110,7 @@ export function LoanCard() {
               <div className="flex justify-between">
                 <p>Date of return</p>
                 <time className="font-medium">{dateOfReturn}</time>
-                <input type="hidden" name="dateOfReturn" value={dateOfReturn} />
+                <input type="hidden" name="date_of_return" value={dateOfReturn} />
               </div>
               <div className="flex justify-between">
                 <p>TIN 12,90%</p>
@@ -125,7 +125,7 @@ export function LoanCard() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button disabled={isSubmitting} type="submit" isFullWidth className="font-bold">
-            {isSubmitting ? "Loading..." : "Start"}
+            {isSubmitting ? "Starting..." : "Start"}
           </Button>
         </CardFooter>
       </Card>
@@ -135,9 +135,18 @@ export function LoanCard() {
 function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputBlur, setLoanInput }: Record<string, any>) {
   return (
     <div className="flex flex-col gap-y-4 md:gap-y-0">
-      <Label htmlFor="loan">How much you need?</Label>
+      <Label htmlFor="amount">How much you need?</Label>
       <div className="grid gap-4 md:grid-cols-4">
-        <Slider id="loan" name="loan" className="col-span-3" value={[loanSlider]} step={500} min={4000} max={35000} onValueChange={(value) => handleLoanSliderChange(value[0])} />
+        <Slider
+          id="amount"
+          name="amount"
+          className="col-span-3"
+          value={[loanSlider]}
+          step={500}
+          min={4000}
+          max={35000}
+          onValueChange={(value) => handleLoanSliderChange(value[0])}
+        />
         <div className="flex items-center gap-2">
           <Input
             type="text"

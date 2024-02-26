@@ -2,6 +2,7 @@ import * as RAC from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { getInputProps } from "@conform-to/react";
+import React from "react";
 
 interface InputProps extends RAC.InputProps, VariantProps<typeof inputVariants> {}
 
@@ -30,19 +31,21 @@ function Text({ className, slot, ...props }: RAC.TextProps) {
 // form field
 
 interface FormFieldProps {
-  type?: string;
+  type?: React.ComponentProps<"input">["type"];
+  autoComplete?: React.ComponentProps<"input">["autoComplete"];
   label: string;
   field: any;
+  placeholder?: string;
 }
 
-function FormField({ type, label, field }: FormFieldProps) {
+function FormField({ type, autoComplete, label, field, placeholder }: FormFieldProps) {
   return (
     <RAC.TextField name={field.name} className="w-full space-y-2">
       <div className="flex justify-between items-baseline">
         <Label htmlFor={field.id}>{label}</Label>
         {field.errors ? <Text slot="errorMessage">{field.errors}</Text> : null}
       </div>
-      <Input {...getInputProps(field, { type: type as any })} />
+      <Input placeholder={placeholder} autoComplete={autoComplete} {...getInputProps(field, { type: type as any })} />
     </RAC.TextField>
   );
 }
