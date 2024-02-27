@@ -4,7 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { getInputProps } from "@conform-to/react";
 import React from "react";
 
-interface InputProps extends RAC.InputProps, VariantProps<typeof inputVariants> {}
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva([
   "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground",
@@ -14,40 +14,40 @@ const inputVariants = cva([
 ]);
 
 function Input({ className, type, ...props }: InputProps) {
-  return <RAC.Input type={type} className={cn(inputVariants(), className)} {...props} />;
+  return <input type={type} className={cn(inputVariants(), className)} {...props} />;
 }
 
 /** Label */
-function Label({ className, ...props }: RAC.LabelProps) {
-  return <RAC.Label className={cn("text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", className)} {...props} />;
+function Label({ className, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return <label className={cn("text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", className)} {...props} />;
 }
 
-//  Text
+//  ErrorMessage
 
-function Text({ className, slot, ...props }: RAC.TextProps) {
-  return <RAC.Text className={cn({ "text-destructive text-sm": slot === "errorMessage" }, className)} slot={slot} {...props} />;
+function ErrorMessage({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+  return <span className={cn("text-destructive text-sm", className)} {...props} />;
 }
 
-// form field
+// Text field
 
 interface FormFieldProps {
-  type?: React.ComponentProps<"input">["type"];
-  autoComplete?: React.ComponentProps<"input">["autoComplete"];
-  label: string;
-  field: any;
-  placeholder?: string;
+  labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
+  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+  errors: any;
 }
 
-function FormField({ type, autoComplete = "off", label, field, placeholder }: FormFieldProps) {
+function TextField({ labelProps, inputProps, errors }: FormFieldProps) {
+  const id = inputProps.id;
+  const errorId = errors ? `${id}-error` : undefined;
   return (
-    <RAC.TextField name={field.name} className="w-full space-y-2">
+    <div className="w-full space-y-2">
       <div className="flex justify-between items-baseline">
-        <Label htmlFor={field.id}>{label}</Label>
-        {field.errors ? <Text slot="errorMessage">{field.errors}</Text> : null}
+        <Label htmlFor={id} {...labelProps} />
+        {errorId ? <ErrorMessage id={errorId}>{errors[0]}</ErrorMessage> : null}
       </div>
-      <Input placeholder={placeholder} autoComplete={autoComplete} {...getInputProps(field, { type: type as any })} />
-    </RAC.TextField>
+      <Input {...inputProps} />
+    </div>
   );
 }
 
-export { Input, Text, FormField, Label };
+export { Input, ErrorMessage, TextField, Label };

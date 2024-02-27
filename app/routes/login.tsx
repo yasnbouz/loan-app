@@ -1,12 +1,12 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FormField, Text } from "@/components/ui/form";
+import { TextField, ErrorMessage } from "@/components/ui/form";
 import { Form } from "react-aria-components";
 import { z } from "zod";
-import { parseWithZod } from "@conform-to/zod";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { json, redirect, useActionData } from "@remix-run/react";
-import { useForm } from "@conform-to/react";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
@@ -37,6 +37,7 @@ export default function Login() {
 
   const [form, fields] = useForm({
     lastResult,
+    constraint: getZodConstraint(schema),
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
@@ -45,18 +46,19 @@ export default function Login() {
   });
   return (
     <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-      <Form method="post" id={form.id} onSubmit={form.onSubmit}>
+      <Form method="post" {...getFormProps(form)}>
         <Card>
           <CardHeader>
             <CardTitle>Login to Moneyeget</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <FormField label="Email" field={fields.email} type="email" autoComplete="email" />
-            <FormField label="Password" field={fields.password} type="password" />
+            <TextField labelProps={{ children: "Email" }} inputProps={{ ...getInputProps(fields.email, { type: "email" }) }} errors={fields.email.errors} />
+            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
             {lastResult?.error && (
               <div className="flex gap-x-2 items-center">
                 <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
-                <Text slot="errorMessage">{lastResult?.error}</Text>
+                <ErrorMessage>{lastResult?.error}</ErrorMessage>
               </div>
             )}
           </CardContent>

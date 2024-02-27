@@ -6,11 +6,10 @@ import { createClient } from "@/.server/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { z } from "zod";
-import { parseWithZod } from "@conform-to/zod";
-import { useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormField, Text, Label } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
+import { TextField, ErrorMessage, Label } from "@/components/ui/form";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const schema = z
@@ -85,8 +84,12 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function SignUp() {
   const [togglePassword, setTogglePassword] = useState(false);
   const lastResult = useActionData<typeof action>();
+  const constraint = getZodConstraint(schema);
+
+  console.log(constraint);
   const [form, fields] = useForm({
     lastResult,
+    constraint,
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
@@ -98,25 +101,35 @@ export default function SignUp() {
 
   return (
     <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-      <RemixForm method="post" id={form.id} onSubmit={form.onSubmit}>
+      <RemixForm method="post" {...getFormProps(form)}>
         <Card>
           <CardHeader>
             <CardTitle>Create your account</CardTitle>
             <CardDescription>Now we need some data</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <FormField field={fields.fullName} label="Full Name" />
-            <FormField field={fields.DNI} label="DNI" />
-            <FormField field={fields.phone} placeholder="9 digit number" type="tel" label="Phone" />
-            <FormField field={fields.email} autoComplete="email" placeholder="info@example.com" type="email" label="Email" />
-            <FormField field={fields.password} type={togglePassword ? "text" : "password"} label="Password" />
-            <FormField field={fields.confirmPassword} type={togglePassword ? "text" : "password"} label="Confirm Password" />
+            <TextField labelProps={{ children: "Full name" }} inputProps={getInputProps(fields.fullName, { type: "text" })} errors={fields.fullName.errors} />
+            <TextField labelProps={{ children: "DNI" }} inputProps={getInputProps(fields.DNI, { type: "text" })} errors={fields.DNI.errors} />
+            <TextField
+              labelProps={{ children: "Phone" }}
+              inputProps={{ placeholder: "+34 xxx xxx xxxx", ...getInputProps(fields.phone, { type: "tel" }) }}
+              errors={fields.phone.errors}
+            />
+            <TextField
+              labelProps={{ children: "Email" }}
+              inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
+              errors={fields.email.errors}
+            />
+            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+            <TextField
+              labelProps={{ children: "Confirm Password" }}
+              inputProps={getInputProps(fields.confirmPassword, { type: "password" })}
+              errors={fields.confirmPassword.errors}
+            />
             {form.allErrors["passwordNotMatch"] ? (
               <div className="flex gap-x-2 items-center ">
                 <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
-                <Text slot="errorMessage" className="">
-                  {form.allErrors["passwordNotMatch"]}
-                </Text>
+                <ErrorMessage>{form.allErrors["passwordNotMatch"]}</ErrorMessage>
               </div>
             ) : null}
             <div className="flex items-center gap-x-2">
@@ -126,11 +139,11 @@ export default function SignUp() {
               </Label>
             </div>
             <div className="flex items-center gap-x-2">
-              <Checkbox id={fields.terms.id} name={fields.terms.name} className={cn({ "border-destructive": form.allErrors["terms"] })} />
+              <Checkbox id={fields.terms.id} name={fields.terms.name} aria-invalid={!!fields.terms.allErrors["terms"]} />
               <Label htmlFor={fields.terms.id} className="text-muted-foreground">
-                I agree to the{" "}
+                Accept{" "}
                 <Link to={"#"} className="text-primary underline">
-                  BRAND Terms
+                  terms and conditions
                 </Link>
               </Label>
             </div>
