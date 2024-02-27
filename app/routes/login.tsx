@@ -11,8 +11,8 @@ import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const schema = z.object({
-  email: z.string().email("Email is invalid"),
-  password: z.string().min(6, "must contain at least 6 character(s)"),
+  email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
+  password: z.string({ required_error: "Password is required" }).min(6, "Password is too short"),
 });
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -53,7 +53,6 @@ export default function Login() {
           </CardHeader>
           <CardContent className="space-y-4">
             <TextField labelProps={{ children: "Email" }} inputProps={{ ...getInputProps(fields.email, { type: "email" }) }} errors={fields.email.errors} />
-            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
             <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
             {lastResult?.error && (
               <div className="flex gap-x-2 items-center">

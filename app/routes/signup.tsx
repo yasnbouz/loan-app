@@ -14,11 +14,11 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const schema = z
   .object({
-    fullName: z.string().min(4, "must contain at least 4 character(s)"),
-    DNI: z.string(),
-    phone: z.string(),
-    email: z.string().email("email is invalid"),
-    password: z.string().min(6, "must contain at least 6 character(s)"),
+    fullName: z.string({ required_error: "Fullname is required" }).min(4, "must contain at least 4 character(s)"),
+    DNI: z.string({ required_error: "DNI is required" }),
+    phone: z.string({ required_error: "Phone is required" }),
+    email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
+    password: z.string({ required_error: "Password is required" }).min(6, "Password is too short"),
     confirmPassword: z.string().min(6),
     terms: z
       .boolean()
@@ -86,7 +86,6 @@ export default function SignUp() {
   const lastResult = useActionData<typeof action>();
   const constraint = getZodConstraint(schema);
 
-  console.log(constraint);
   const [form, fields] = useForm({
     lastResult,
     constraint,
