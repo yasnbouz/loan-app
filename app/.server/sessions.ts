@@ -12,7 +12,7 @@ const themeSessionStorage = createCookieSessionStorage({
     sameSite: "lax",
     secrets: ["s3cr3t"],
     // Set domain and secure only if in production
-    ...(isProduction ? { domain: "your-production-domain.com", secure: true } : {}),
+    ...(isProduction ? { domain: process.env.SITE_URL, secure: true } : {}),
   },
 });
 
@@ -29,6 +29,6 @@ export const loanSessionStorage = createCookieSessionStorage({
     sameSite: "lax",
     secrets: ["ef8e4f"],
     // Set domain and secure only if in production
-    ...(isProduction ? { domain: "your-production-domain.com", secure: true } : {}),
+    ...(isProduction ? { domain: process.env.SITE_URL, secure: true } : {}),
   },
 });

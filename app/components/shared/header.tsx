@@ -20,7 +20,10 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const session = useOutletContext<Session>();
   const name = (session?.user?.user_metadata?.fullname ?? "") as string;
-  const avatarName = name?.split(" ")?.map((str) => str?.[0]?.toUpperCase());
+  const avatarName = name
+    ?.split(" ")
+    ?.slice(0, 2)
+    .map((str) => str?.[0]?.toUpperCase());
 
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/logout";

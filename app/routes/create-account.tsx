@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, MetaFunction, redirect, useActionData, useNavigation, Link } from "@remix-run/react";
+import type { ActionFunctionArgs } from "@remix-run/node";
+import { Form, MetaFunction, redirect, useActionData, useNavigation, Link, json } from "@remix-run/react";
 import { loanSessionStorage } from "@/.server/sessions";
 import { createClient } from "@/.server/supabase";
 import { Button } from "@/components/ui/button";
@@ -32,14 +32,6 @@ const schema = z
     }
   });
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await loanSessionStorage.getSession(request.headers.get("Cookie"));
-  // if user enter to signup page directly, there is no loan metadata stored yet, so we must redirect the user to home page to fill the loan form
-  if (Object.keys(session.data).length === 0) {
-    return redirect("/");
-  }
-  return null;
-}
 export async function action({ request }: ActionFunctionArgs) {
   // get signup formdata
   const formData = await request.formData();
@@ -78,13 +70,12 @@ export async function action({ request }: ActionFunctionArgs) {
     throw new Error(loanResult.error.message, { cause: loanResult.error });
   }
   // delete loan metdata session
-
-  return redirect("/login", { headers: { "Set-Cookie": await loanSessionStorage.destroySession(session) } });
+  return redirect("/login?message=account-created", { headers: { "Set-Cookie": await loanSessionStorage.destroySession(session) } });
 }
 
 export default function SignUp() {
   const [togglePassword, setTogglePassword] = useState(false);
-  const lastResult = useActionData<typeof action>();
+  const lastResult = useActionData<typeof action>() as any;
   const constraint = getZodConstraint(schema);
 
   const [form, fields] = useForm({
@@ -97,7 +88,7 @@ export default function SignUp() {
     },
   });
   const navigation = useNavigation();
-  const isSubmitting = navigation.formAction === "/join";
+  const isSubmitting = navigation.formAction === "/create-account";
 
   return (
     <Layout>

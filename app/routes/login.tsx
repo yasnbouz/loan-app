@@ -4,11 +4,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { TextField, ErrorMessage } from "@/components/ui/form";
 import { z } from "zod";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { json, redirect, useActionData, useNavigation, Form } from "@remix-run/react";
+import { json, redirect, useActionData, useNavigation, Form, useParams, useSearchParams } from "@remix-run/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import Layout from "@/components/shared/layout";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const schema = z.object({
   email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
@@ -37,7 +39,7 @@ export default function Login() {
   const lastResult = useActionData<typeof action>() as any;
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/login";
-  console.log(navigation);
+
   const [form, fields] = useForm({
     lastResult,
     constraint: getZodConstraint(schema),
@@ -47,6 +49,17 @@ export default function Login() {
       return parseWithZod(formData, { schema });
     },
   });
+
+  const [searchParams] = useSearchParams();
+  const isAccountCreated = searchParams.get("message") === "account-created";
+
+  useEffect(() => {
+    if (isAccountCreated) {
+      toast.info("please confirm your email address", { duration: 20000 });
+      toast.success("Your account has been created successfully", { duration: 8000 });
+    }
+  }, [isAccountCreated]);
+
   return (
     <Layout>
       <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
