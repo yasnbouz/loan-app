@@ -4,6 +4,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/modeToggle";
 import { Form, Link, useOutletContext } from "@remix-run/react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -11,10 +13,14 @@ const navigation = [
   { name: "Marketplace", href: "#" },
   { name: "Company", href: "#" },
 ];
-
+interface Session {
+  user: any;
+}
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const session = useOutletContext();
+  const session = useOutletContext<Session>();
+  const name = (session?.user?.user_metadata?.fullname ?? "") as string;
+  const avatarName = name?.split(" ")?.map((str) => str?.[0]?.toUpperCase());
   return (
     <header>
       <div className="fixed inset-x-0 z-10 bg-background shadow-sm border-b">
@@ -39,9 +45,20 @@ export default function Header() {
           </div>
           <div className="hidden lg:items-center lg:gap-x-3 lg:flex lg:flex-1 lg:justify-end">
             {session ? (
-              <Form method="post" action="/logout">
-                <Button variant={"outline"}>Log Out</Button>
-              </Form>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarFallback>{avatarName}</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <Form method="post" action="/logout">
+                      <button type="submit">Log Out</button>
+                    </Form>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Button asChild variant={"outline"}>
                 <Link to="/login">Log In</Link>
