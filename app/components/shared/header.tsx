@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/modeToggle";
-import { Link } from "@remix-run/react";
+import { Form, Link, useOutletContext } from "@remix-run/react";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -14,7 +14,7 @@ const navigation = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const session = useOutletContext();
   return (
     <header>
       <div className="fixed inset-x-0 z-10 bg-background shadow-sm border-b">
@@ -38,9 +38,15 @@ export default function Header() {
             ))}
           </div>
           <div className="hidden lg:items-center lg:gap-x-3 lg:flex lg:flex-1 lg:justify-end">
-            <Button asChild variant={"outline"}>
-              <Link to="/login">Log In</Link>
-            </Button>
+            {session ? (
+              <Form method="post" action="/logout">
+                <Button variant={"outline"}>Log Out</Button>
+              </Form>
+            ) : (
+              <Button asChild variant={"outline"}>
+                <Link to="/login">Log In</Link>
+              </Button>
+            )}
             <ModeToggle />
           </div>
         </nav>
@@ -68,9 +74,15 @@ export default function Header() {
                 ))}
               </div>
               <div className="py-6 flex items-center justify-between">
-                <Button asChild variant={"outline"}>
-                  <Link to="/login">Log In</Link>
-                </Button>
+                {session ? (
+                  <Form method="post" action="/logout">
+                    <Button variant={"outline"}>Log Out</Button>
+                  </Form>
+                ) : (
+                  <Button asChild variant={"outline"}>
+                    <Link to="/login">Log In</Link>
+                  </Button>
+                )}
                 <ModeToggle />
               </div>
             </div>

@@ -1,11 +1,12 @@
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLoaderData, useRevalidator, useRouteError } from "@remix-run/react";
 import styles from "./styles/tailwind.css?url";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
 import { themeSessionResolver } from "./.server/sessions";
 import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/.server/supabase";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -15,8 +16,14 @@ export const links: LinksFunction = () => [
 // Return the theme from the session storage using the loader
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request);
+
+  const { supabase } = createClient(request);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
   return {
     theme: getTheme(),
+    session,
   };
 }
 // Wrap your app with ThemeProvider.
@@ -32,7 +39,7 @@ export default function AppWithProviders() {
 }
 
 export function App() {
-  const data = useLoaderData<typeof loader>();
+  const { theme: serverTheme, session } = useLoaderData<typeof loader>();
   const [theme] = useTheme();
   return (
     <html lang="en" className={cn(theme)}>
@@ -40,17 +47,11 @@ export function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
-        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(serverTheme)} />
         <Links />
       </head>
       <body>
-        <div className="flex flex-col min-h-dvh">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
+        <Outlet context={session} />
         <ScrollRestoration />
         <Scripts />
       </body>

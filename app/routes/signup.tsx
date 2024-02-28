@@ -11,6 +11,7 @@ import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TextField, ErrorMessage, Label } from "@/components/ui/form";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import Layout from "@/components/shared/layout";
 
 const schema = z
   .object({
@@ -99,65 +100,67 @@ export default function SignUp() {
   const isSubmitting = navigation.formAction === "/join";
 
   return (
-    <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-      <RemixForm method="post" {...getFormProps(form)}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Create your account</CardTitle>
-            <CardDescription>Now we need some data</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <TextField labelProps={{ children: "Full name" }} inputProps={getInputProps(fields.fullName, { type: "text" })} errors={fields.fullName.errors} />
-            <TextField labelProps={{ children: "DNI" }} inputProps={getInputProps(fields.DNI, { type: "text" })} errors={fields.DNI.errors} />
-            <TextField
-              labelProps={{ children: "Phone" }}
-              inputProps={{ placeholder: "+34 xxx xxx xxxx", ...getInputProps(fields.phone, { type: "tel" }) }}
-              errors={fields.phone.errors}
-            />
-            <TextField
-              labelProps={{ children: "Email" }}
-              inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
-              errors={fields.email.errors}
-            />
-            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
-            <TextField
-              labelProps={{ children: "Confirm Password" }}
-              inputProps={getInputProps(fields.confirmPassword, { type: "password" })}
-              errors={fields.confirmPassword.errors}
-            />
-            {form.allErrors["passwordNotMatch"] ? (
-              <div className="flex gap-x-2 items-center ">
-                <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
-                <ErrorMessage>{form.allErrors["passwordNotMatch"]}</ErrorMessage>
+    <Layout>
+      <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
+        <RemixForm method="post" {...getFormProps(form)}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Create your account</CardTitle>
+              <CardDescription>Now we need some data</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <TextField labelProps={{ children: "Full name" }} inputProps={getInputProps(fields.fullName, { type: "text" })} errors={fields.fullName.errors} />
+              <TextField labelProps={{ children: "DNI" }} inputProps={getInputProps(fields.DNI, { type: "text" })} errors={fields.DNI.errors} />
+              <TextField
+                labelProps={{ children: "Phone" }}
+                inputProps={{ placeholder: "+34 xxx xxx xxxx", ...getInputProps(fields.phone, { type: "tel" }) }}
+                errors={fields.phone.errors}
+              />
+              <TextField
+                labelProps={{ children: "Email" }}
+                inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
+                errors={fields.email.errors}
+              />
+              <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+              <TextField
+                labelProps={{ children: "Confirm Password" }}
+                inputProps={getInputProps(fields.confirmPassword, { type: "password" })}
+                errors={fields.confirmPassword.errors}
+              />
+              {form.allErrors["passwordNotMatch"] ? (
+                <div className="flex gap-x-2 items-center ">
+                  <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
+                  <ErrorMessage>{form.allErrors["passwordNotMatch"]}</ErrorMessage>
+                </div>
+              ) : null}
+              <div className="flex items-center gap-x-2">
+                <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
+                <Label htmlFor="showPassword" className="text-muted-foreground">
+                  {togglePassword ? "Hide password" : "Show password"}
+                </Label>
               </div>
-            ) : null}
-            <div className="flex items-center gap-x-2">
-              <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
-              <Label htmlFor="showPassword" className="text-muted-foreground">
-                {togglePassword ? "Hide password" : "Show password"}
-              </Label>
-            </div>
-            <div className="flex items-center gap-x-2">
-              <Checkbox id={fields.terms.id} name={fields.terms.name} aria-invalid={!!fields.terms.allErrors["terms"]} />
-              <Label htmlFor={fields.terms.id} className="text-muted-foreground">
-                Accept{" "}
-                <Link to={"#"} className="text-primary underline">
-                  terms and conditions
-                </Link>
-              </Label>
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button disabled={isSubmitting} type="submit">
-              {isSubmitting === true ? "Creating..." : "Create Account"}
-            </Button>
-            <Button type="reset" variant={"outline"}>
-              Clear
-            </Button>
-          </CardFooter>
-        </Card>
-      </RemixForm>
-    </div>
+              <div className="flex items-center gap-x-2">
+                <Checkbox id={fields.terms.id} name={fields.terms.name} aria-invalid={!!fields.terms.allErrors["terms"]} />
+                <Label htmlFor={fields.terms.id} className="text-muted-foreground">
+                  Accept{" "}
+                  <Link to={"#"} className="text-primary underline">
+                    terms and conditions
+                  </Link>
+                </Label>
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting === true ? "Creating..." : "Create Account"}
+              </Button>
+              <Button type="reset" variant={"outline"}>
+                Clear
+              </Button>
+            </CardFooter>
+          </Card>
+        </RemixForm>
+      </div>
+    </Layout>
   );
 }
 export const meta: MetaFunction = () => {

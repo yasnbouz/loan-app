@@ -9,6 +9,7 @@ import { json, redirect, useActionData } from "@remix-run/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import Layout from "@/components/shared/layout";
 
 const schema = z.object({
   email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
@@ -23,13 +24,14 @@ export async function action({ request }: ActionFunctionArgs) {
     return json(submission.reply());
   }
   // login
-  const supabase = createClient(request);
+  const { supabase, headers } = createClient(request);
   const { error } = await supabase.auth.signInWithPassword({ email: submission.value.email, password: submission.value.password });
+
   if (error) {
-    return json({ error: error.message }, { status: error.status });
+    return json({ error: error.message }, { status: error.status, headers });
   }
 
-  return null;
+  return redirect("/join", { headers });
 }
 
 export default function Login() {
@@ -45,27 +47,29 @@ export default function Login() {
     },
   });
   return (
-    <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-      <Form method="post" {...getFormProps(form)}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Login to Moneyeget</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <TextField labelProps={{ children: "Email" }} inputProps={{ ...getInputProps(fields.email, { type: "email" }) }} errors={fields.email.errors} />
-            <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
-            {lastResult?.error && (
-              <div className="flex gap-x-2 items-center">
-                <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
-                <ErrorMessage>{lastResult?.error}</ErrorMessage>
-              </div>
-            )}
-          </CardContent>
-          <CardFooter>
-            <Button>Log In</Button>
-          </CardFooter>
-        </Card>
-      </Form>
-    </div>
+    <Layout>
+      <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
+        <Form method="post" {...getFormProps(form)}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Login to Moneyeget</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <TextField labelProps={{ children: "Email" }} inputProps={{ ...getInputProps(fields.email, { type: "email" }) }} errors={fields.email.errors} />
+              <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+              {lastResult?.error && (
+                <div className="flex gap-x-2 items-center">
+                  <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
+                  <ErrorMessage>{lastResult?.error}</ErrorMessage>
+                </div>
+              )}
+            </CardContent>
+            <CardFooter>
+              <Button>Log In</Button>
+            </CardFooter>
+          </Card>
+        </Form>
+      </div>
+    </Layout>
   );
 }

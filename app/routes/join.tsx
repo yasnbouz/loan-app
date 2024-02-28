@@ -1,17 +1,9 @@
-import { createClient } from "@/.server/supabase";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-export async function loader({ request }: LoaderFunctionArgs) {
-  const supabase = await createClient(request);
-  const { data, error } = await supabase.auth.getSession();
-
-  console.log({ data, error });
-  return {};
-}
+import Layout from "@/components/shared/layout";
 
 export default function Join() {
   return (
-    <div className="mt-44">
+    <Layout>
       <h1>Welcome</h1>
-    </div>
+    </Layout>
   );
 }

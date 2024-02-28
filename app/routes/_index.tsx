@@ -7,6 +7,7 @@ import Reviews from "@/components/reviews";
 import TrustUs from "@/components/trustUs";
 import { redirect, type MetaFunction } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
+import Layout from "@/components/shared/layout";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Request your Online Personal Loan" }, { name: "description", content: "Welcome to Remix!" }];
@@ -36,13 +37,13 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 export default function Home() {
   return (
-    <>
+    <Layout>
       <Hero />
       <TrustUs />
       {/* <Brands /> */}
       <Requirements />
       <Reviews />
       <FAQS />
-    </>
+    </Layout>
   );
 }
