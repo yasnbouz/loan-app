@@ -33,7 +33,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const date_of_return = formaData.get("date_of_return");
   session.set("date_of_return", date_of_return);
-  return redirect("/signup", { headers: { "Set-Cookie": await loanSessionStorage.commitSession(session) } });
+  return redirect("/create-account", { headers: { "Set-Cookie": await loanSessionStorage.commitSession(session) } });
 }
 export default function Home() {
   return (

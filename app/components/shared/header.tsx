@@ -3,11 +3,11 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/modeToggle";
-import { Form, Link, useOutletContext } from "@remix-run/react";
+import { Form, Link, useNavigation, useOutletContext } from "@remix-run/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-const navigation = [
+const navigationList = [
   { name: "Product", href: "#" },
   { name: "Features", href: "#" },
   { name: "Marketplace", href: "#" },
@@ -21,6 +21,10 @@ export default function Header() {
   const session = useOutletContext<Session>();
   const name = (session?.user?.user_metadata?.fullname ?? "") as string;
   const avatarName = name?.split(" ")?.map((str) => str?.[0]?.toUpperCase());
+
+  const navigation = useNavigation();
+  const isSubmitting = navigation.formAction === "/logout";
+
   return (
     <header>
       <div className="fixed inset-x-0 z-10 bg-background shadow-sm border-b">
@@ -37,7 +41,7 @@ export default function Header() {
             </Button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
+            {navigationList.map((item) => (
               <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground">
                 {item.name}
               </a>
@@ -54,7 +58,9 @@ export default function Header() {
                 <DropdownMenuContent>
                   <DropdownMenuItem>
                     <Form method="post" action="/logout">
-                      <button type="submit">Log Out</button>
+                      <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Log Out..." : "Log Out"}
+                      </button>
                     </Form>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -84,7 +90,7 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => (
+                {navigationList.map((item) => (
                   <a key={item.name} href={item.href} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-primary-foreground">
                     {item.name}
                   </a>
@@ -93,7 +99,9 @@ export default function Header() {
               <div className="py-6 flex items-center justify-between">
                 {session ? (
                   <Form method="post" action="/logout">
-                    <Button variant={"outline"}>Log Out</Button>
+                    <Button type="submit" disabled={isSubmitting} variant={"outline"}>
+                      {isSubmitting ? "Log Out..." : "Log Out"}
+                    </Button>
                   </Form>
                 ) : (
                   <Button asChild variant={"outline"}>

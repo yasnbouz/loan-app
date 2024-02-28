@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form as RemixForm, MetaFunction, redirect, useActionData, useNavigation, Link } from "@remix-run/react";
+import { Form, MetaFunction, redirect, useActionData, useNavigation, Link } from "@remix-run/react";
 import { loanSessionStorage } from "@/.server/sessions";
 import { createClient } from "@/.server/supabase";
 import { Button } from "@/components/ui/button";
@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return submission.reply();
   }
   // send to database
-  const supabase = createClient(request);
+  const { supabase } = createClient(request);
   const userResult = await supabase.auth.signUp({
     email: submission.value.email,
     password: submission.value.password,
@@ -102,7 +102,7 @@ export default function SignUp() {
   return (
     <Layout>
       <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
-        <RemixForm method="post" {...getFormProps(form)}>
+        <Form method="post" {...getFormProps(form)}>
           <Card>
             <CardHeader>
               <CardTitle>Create your account</CardTitle>
@@ -118,13 +118,17 @@ export default function SignUp() {
               />
               <TextField
                 labelProps={{ children: "Email" }}
-                inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
+                inputProps={{ placeholder: "you@example.com", ...getInputProps(fields.email, { type: "email" }) }}
                 errors={fields.email.errors}
               />
-              <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+              <TextField
+                labelProps={{ children: "Password" }}
+                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: "password" }) }}
+                errors={fields.password.errors}
+              />
               <TextField
                 labelProps={{ children: "Confirm Password" }}
-                inputProps={getInputProps(fields.confirmPassword, { type: "password" })}
+                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.confirmPassword, { type: "password" }) }}
                 errors={fields.confirmPassword.errors}
               />
               {form.allErrors["passwordNotMatch"] ? (
@@ -158,7 +162,7 @@ export default function SignUp() {
               </Button>
             </CardFooter>
           </Card>
-        </RemixForm>
+        </Form>
       </div>
     </Layout>
   );

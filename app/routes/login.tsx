@@ -2,10 +2,9 @@ import type { ActionFunctionArgs } from "@remix-run/node";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextField, ErrorMessage } from "@/components/ui/form";
-import { Form } from "react-aria-components";
 import { z } from "zod";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { json, redirect, useActionData } from "@remix-run/react";
+import { json, redirect, useActionData, useNavigation, Form } from "@remix-run/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
@@ -36,7 +35,9 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Login() {
   const lastResult = useActionData<typeof action>() as any;
-
+  const navigation = useNavigation();
+  const isSubmitting = navigation.formAction === "/login";
+  console.log(navigation);
   const [form, fields] = useForm({
     lastResult,
     constraint: getZodConstraint(schema),
@@ -55,8 +56,16 @@ export default function Login() {
               <CardTitle>Login to Moneyeget</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <TextField labelProps={{ children: "Email" }} inputProps={{ ...getInputProps(fields.email, { type: "email" }) }} errors={fields.email.errors} />
-              <TextField labelProps={{ children: "Password" }} inputProps={getInputProps(fields.password, { type: "password" })} errors={fields.password.errors} />
+              <TextField
+                labelProps={{ children: "Email" }}
+                inputProps={{ placeholder: "you@example.com", ...getInputProps(fields.email, { type: "email" }) }}
+                errors={fields.email.errors}
+              />
+              <TextField
+                labelProps={{ children: "Password" }}
+                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: "password" }) }}
+                errors={fields.password.errors}
+              />
               {lastResult?.error && (
                 <div className="flex gap-x-2 items-center">
                   <ExclamationCircleIcon className="w-6 h-6 text-destructive" />
@@ -65,7 +74,9 @@ export default function Login() {
               )}
             </CardContent>
             <CardFooter>
-              <Button>Log In</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Log In..." : "Log In"}
+              </Button>
             </CardFooter>
           </Card>
         </Form>
