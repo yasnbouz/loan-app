@@ -92,7 +92,7 @@ export default function SignUp() {
 
   return (
     <Layout>
-      <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
         <Form method="post" {...getFormProps(form)}>
           <Card>
             <CardHeader>

@@ -1,7 +1,7 @@
 export default function Requirements() {
   return (
     <div className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold pb-4 tracking-tight text-primary sm:text-4xl">Requirements for applying for an online loan in BRAND Spain</h2>
         <div className="text-lg space-y-4 leading-8 text-muted-foreground">
           <p className="mt-6 max-w-[75ch]">

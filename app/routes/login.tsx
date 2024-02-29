@@ -32,7 +32,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ error: error.message }, { status: error.status, headers });
   }
 
-  return redirect("/join", { headers });
+  return redirect("/registration", { headers });
 }
 
 export default function Login() {
@@ -62,7 +62,7 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="mt-44 max-w-2xl mx-auto px-6 lg:px-8">
+      <div className="max-w-xl mx-auto">
         <Form method="post" {...getFormProps(form)}>
           <Card>
             <CardHeader>

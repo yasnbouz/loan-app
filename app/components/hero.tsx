@@ -2,9 +2,9 @@ import { LoanCard } from "@/components/loanCard";
 
 export default function Hero() {
   return (
-    <div className="relative mt-20 isolate overflow-hidden">
-      <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-5 lg:gap-x-8 lg:px-8 lg:py-40">
-        <div className="px-6 lg:px-0 lg:pt-4 lg:col-span-2">
+    <div className="relative isolate overflow-hidden">
+      <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-5 lg:gap-x-8">
+        <div className="lg:col-span-2">
           <div className="mx-auto max-w-2xl">
             <div className="max-w-lg">
               <h1 className="mt-10 text-4xl font-bold tracking-tight text-accent-foreground sm:text-5xl">Request your Online Personal Loan up to 35,000</h1>
