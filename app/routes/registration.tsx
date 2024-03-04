@@ -52,7 +52,7 @@ async function asyncIterableToStream(asyncIterable: AsyncIterable<Uint8Array>, f
   return file.stream();
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   const { supabase, headers } = createClient(request);
 
   // check user session
@@ -83,7 +83,7 @@ export async function action({ request }: ActionFunctionArgs) {
   }, unstable_createMemoryUploadHandler());
   // get form data from client
   const formData = await unstable_parseMultipartFormData(request, uploadHandler);
-
+  let businessId;
   const intent = formData.get("intent");
   switch (intent) {
     case "stepOne":
@@ -92,13 +92,23 @@ export async function action({ request }: ActionFunctionArgs) {
       const companyType = formData.get("CompanyType");
 
       if (idCardOrPassPath && idCardOrPassWithSelfiePath && companyType) {
-        const { error } = await supabase.from("companies").insert({ user_id: session?.user.id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType });
+        const { error, data } = await supabase.from("companies").insert({ user_id: session?.user.id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType }).select();
         if (error) throw error;
-        return json({ stepOne: true });
+        return json({ stepOne: true, id: data?.[0]?.id });
       }
       break;
     case "stepTwo":
-      console.log("step 2");
+      const url = new URL(request.url);
+
+      const businessID = url.searchParams.get("id");
+      const trajetaFiscal = formData.get("trajetaFiscal");
+      const certificadoCensal = formData.get("certificadoCensal");
+      const modelo036 = formData.get("modelo036");
+      const modelo037 = formData.get("modelo037");
+      const escrituraEmpresa = formData.get("escrituraEmpresa");
+      const { error } = await supabase.from("companies").update({ trajetaFiscal, certificadoCensal, modelo036, modelo037, escrituraEmpresa }).eq("id", businessID);
+
+      if (error) throw error;
       return json({ stepTwo: true });
   }
 
@@ -156,15 +166,19 @@ function StepOne() {
       return parseWithZod(formData, { schema: schemaStepOne });
     },
   });
+  const companyID = lastResult?.id;
   const companyType = useInputControl(fields.CompanyType);
   const IsStepOneDone = lastResult?.stepOne === true;
+
   const navigation = useNavigation();
-  const isSubmitting = navigation.formAction === "/registration";
+  const isSubmitting = navigation.formAction === "/registration" || navigation.formAction === "/registration?step=1";
+
   useEffect(() => {
     if (IsStepOneDone) {
       setSearchParams((prev) => {
         prev.set("step", "2");
         prev.set("companyType", `${companyType.value}`);
+        prev.set("id", companyID);
         return prev;
       });
     }
@@ -209,6 +223,7 @@ function StepOne() {
   );
 }
 type IcompanyType = "autonomo" | "sociedad";
+
 function createSchema(companyType: IcompanyType) {
   if (companyType === "autonomo") {
     return z.object({
@@ -233,7 +248,7 @@ function StepTwo() {
   const IsStepTwoDone = lastResult?.stepTwo === true;
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.formAction === `/registration?step=2&companyType=${companyType}`;
+  const isSubmitting = navigation.formAction === `/registration?step=2&companyType=${companyType}&id=${searchParams.get("id")}`;
 
   const [form, fields] = useForm({
     lastResult,
@@ -245,19 +260,19 @@ function StepTwo() {
     if (IsStepTwoDone) {
       setSearchParams((prev) => {
         prev.delete("companyType");
+        prev.delete("id");
         prev.set("step", "3");
         return prev;
       });
     }
   }, [IsStepTwoDone]);
 
-  console.log(navigation);
   return (
     <Card className="w-11/12">
       <Form {...getFormProps(form)} method="POST" encType="multipart/form-data">
         <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
-          <CardDescription>Fill your personal information</CardDescription>
+          <CardTitle>Business Information</CardTitle>
+          <CardDescription>Fill your business information</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <TextField
@@ -272,7 +287,7 @@ function StepTwo() {
           />
           <TextField labelProps={{ children: "Modelo 036" }} inputProps={{ ...getInputProps(fields.modelo036, { type: "file" }) }} errors={fields.modelo036.errors} />
           {companyType === "autonomo" ? (
-            <TextField labelProps={{ children: "Modelo 037" }} inputProps={{ ...getInputProps(fields.modelo036, { type: "file" }) }} errors={fields.modelo037.errors} />
+            <TextField labelProps={{ children: "Modelo 037" }} inputProps={{ ...getInputProps(fields.modelo037, { type: "file" }) }} errors={fields.modelo037.errors} />
           ) : null}
           {companyType === "sociedad" ? (
             <TextField
