@@ -9,5 +9,5 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ error: error.message }, { headers });
   }
 
-  return redirect("/", { headers });
+  return redirect("/login", { headers });
 }
