@@ -2,7 +2,6 @@ import { useSearchParams } from "@remix-run/react";
 import {
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
-  redirect,
   json,
   unstable_parseMultipartFormData,
   unstable_composeUploadHandlers,
@@ -48,12 +47,13 @@ export async function action({ request }: ActionFunctionArgs) {
   const intent = formData.get("intent");
   switch (intent) {
     case "stepOne":
-      const idCardOrPassPath = formData.get("idCardOrPass");
-      const idCardOrPassWithSelfiePath = formData.get("idCardOrPassWithSelfie");
-      const companyType = formData.get("CompanyType");
+      const idCardOrPassPath = String(formData.get("idCardOrPass"));
+      const idCardOrPassWithSelfiePath = String(formData.get("idCardOrPassWithSelfie"));
+      const companyType = String(formData.get("CompanyType"));
+      const user_id = String(session?.user?.id);
 
       if (idCardOrPassPath && idCardOrPassWithSelfiePath && companyType) {
-        const { error, data } = await supabase.from("business").insert({ user_id: session?.user?.id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType }).select();
+        const { error, data } = await supabase.from("business").insert({ user_id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType }).select();
         if (error) throw error;
         return json({ stepOne: true, id: data?.[0]?.id });
       }
@@ -61,12 +61,13 @@ export async function action({ request }: ActionFunctionArgs) {
     case "stepTwo":
       const url = new URL(request.url);
 
-      const businessID = url.searchParams.get("id");
-      const trajetaFiscal = formData.get("trajetaFiscal");
-      const certificadoCensal = formData.get("certificadoCensal");
-      const modelo036 = formData.get("modelo036");
-      const modelo037 = formData.get("modelo037");
-      const escrituraEmpresa = formData.get("escrituraEmpresa");
+      const businessID = String(url.searchParams.get("id"));
+      const trajetaFiscal = String(formData.get("trajetaFiscal"));
+      const certificadoCensal = String(formData.get("certificadoCensal"));
+      const modelo036 = String(formData.get("modelo036"));
+      const modelo037 = String(formData.get("modelo037"));
+      const escrituraEmpresa = String(formData.get("escrituraEmpresa"));
+
       const { error } = await supabase.from("business").update({ trajetaFiscal, certificadoCensal, modelo036, modelo037, escrituraEmpresa }).eq("id", businessID);
 
       if (error) throw error;

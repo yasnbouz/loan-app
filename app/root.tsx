@@ -20,6 +20,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+  
+  
   return {
     theme: getTheme(),
     session,

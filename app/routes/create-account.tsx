@@ -58,13 +58,14 @@ export async function action({ request }: ActionFunctionArgs) {
     throw new Error(userResult.error.message, { cause: userResult.error });
   }
   // send loan data
-  const user_id = userResult?.data?.user?.id;
+  const user_id = String(userResult?.data?.user?.id);
   const amount = parseFloat(session.data.amount);
   const months = parseInt(session.data.months);
   const monthly_quota = parseFloat(session.data.monthly_quota);
   const interest = parseFloat(session.data.interest);
   const total = parseFloat(session.data.total);
-  const date_of_return = session.data.date_of_return;
+  const date_of_return = String(session.data.date_of_return);
+
   const loanResult = await supabase.from("loans").insert([{ user_id, amount, months, monthly_quota, interest, total, date_of_return }]).select();
   if (loanResult.error) {
     throw new Error(loanResult.error.message, { cause: loanResult.error });

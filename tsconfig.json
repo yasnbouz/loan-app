@@ -1,5 +1,5 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "app/.server/sessions.ts"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "app/.server/sessions.ts", "app/.server/db-types.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,

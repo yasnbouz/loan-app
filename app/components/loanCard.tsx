@@ -57,7 +57,7 @@ export function LoanCard() {
     }
   }
   /***********calculate loan************ */
-  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 12.9, monthsSlider);
+  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 4.45, monthsSlider);
   /**********optimist ui************* */
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/?index";
@@ -113,7 +113,7 @@ export function LoanCard() {
                 <input type="hidden" name="date_of_return" value={dateOfReturn} />
               </div>
               <div className="flex justify-between">
-                <p>TIN 12,90%</p>
+                <p>TIN 4,45%</p>
                 <time className="font-medium">Commission opening 0.00&euro;</time>
               </div>
               <div className="flex justify-between">

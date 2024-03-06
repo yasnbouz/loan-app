@@ -1,7 +1,8 @@
 import { createClient } from "@/.server/supabase";
 import { redirect } from "@remix-run/node";
+import { Session } from "@supabase/supabase-js";
 
-export async function checkSession(request: Request) {
+export async function checkSession(request: Request): Promise<Session | null> {
   const { supabase, headers } = createClient(request);
   const {
     data: { session },
@@ -11,7 +12,7 @@ export async function checkSession(request: Request) {
   if (error) throw error;
 
   if (!session?.access_token) {
-    return redirect("/login", { headers });
+    redirect("/login", { headers });
   }
   return session;
 }
