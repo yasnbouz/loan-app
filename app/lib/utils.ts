@@ -29,8 +29,8 @@ export function calculateAmortizedLoan(principal: number, interestRate: number, 
 
   const total = principal + totalInterest;
   return {
-    monthlyPayment: payment.toFixed(2),
-    totalInterest: totalInterest.toFixed(2),
-    total: total.toFixed(2),
+    monthlyPayment: new Intl.NumberFormat().format(payment),
+    totalInterest: new Intl.NumberFormat().format(totalInterest),
+    total: new Intl.NumberFormat().format(total),
   };
 }

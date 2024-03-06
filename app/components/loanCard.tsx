@@ -16,6 +16,7 @@ export function LoanCard() {
     minLoan = 4000;
   const [loanSlider, setLoanSlider] = useState(maxLoan);
   const [loanInput, setLoanInput] = useState(maxLoan);
+  const [TIN, setTIN] = useState(4.45);
 
   function handleLoanSliderChange(loan: number) {
     setLoanSlider(loan);
@@ -57,7 +58,7 @@ export function LoanCard() {
     }
   }
   /***********calculate loan************ */
-  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, 4.45, monthsSlider);
+  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, TIN, monthsSlider);
   /**********optimist ui************* */
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/?index";
@@ -105,7 +106,7 @@ export function LoanCard() {
               </div>
               <div className="flex justify-between">
                 <p>Amount of the loan</p>
-                <span className="font-bold">{loanSlider} &euro;</span>
+                <span className="font-bold">{Intl.NumberFormat().format(loanSlider)} &euro;</span>
               </div>
               <div className="flex justify-between">
                 <p>Date of return</p>
