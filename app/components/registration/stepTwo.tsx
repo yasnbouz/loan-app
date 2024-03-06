@@ -10,13 +10,13 @@ import { useEffect } from "react";
 
 export function StepTwo() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const companyType = (searchParams.get("companyType") || "autonomo") as IcompanyType;
+  const companyType = (searchParams.get("company-type") || "autonomo") as IcompanyType;
 
   const lastResult = useActionData<typeof action>() as any;
   const IsStepTwoDone = lastResult?.stepTwo === true;
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.formAction === `/registration?step=2&companyType=${companyType}&id=${searchParams.get("id")}`;
+  const isSubmitting = navigation.formAction === `/registration?step=2&company-type=${companyType}&id=${searchParams.get("id")}`;
 
   const [form, fields] = useForm({
     lastResult,
@@ -27,7 +27,7 @@ export function StepTwo() {
   useEffect(() => {
     if (IsStepTwoDone) {
       setSearchParams((prev) => {
-        prev.delete("companyType");
+        prev.delete("company-type");
         prev.delete("id");
         prev.set("step", "3");
         return prev;
@@ -53,16 +53,18 @@ export function StepTwo() {
             inputProps={{ ...getInputProps(fields.certificadoCensal, { type: "file" }) }}
             errors={fields.certificadoCensal.errors}
           />
-          <TextField labelProps={{ children: "Modelo 036" }} inputProps={{ ...getInputProps(fields.modelo036, { type: "file" }) }} errors={fields.modelo036.errors} />
           {companyType === "autonomo" ? (
             <TextField labelProps={{ children: "Modelo 037" }} inputProps={{ ...getInputProps(fields.modelo037, { type: "file" }) }} errors={fields.modelo037.errors} />
           ) : null}
           {companyType === "sociedad" ? (
-            <TextField
-              labelProps={{ children: "Escritura de la empresa" }}
-              inputProps={{ ...getInputProps(fields.escrituraEmpresa, { type: "file" }) }}
-              errors={fields.escrituraEmpresa.errors}
-            />
+            <>
+              <TextField labelProps={{ children: "Modelo 036" }} inputProps={{ ...getInputProps(fields.modelo036, { type: "file" }) }} errors={fields.modelo036.errors} />
+              <TextField
+                labelProps={{ children: "Escritura de la empresa" }}
+                inputProps={{ ...getInputProps(fields.escrituraEmpresa, { type: "file" }) }}
+                errors={fields.escrituraEmpresa.errors}
+              />
+            </>
           ) : null}
         </CardContent>
         <CardFooter className="flex justify-end">

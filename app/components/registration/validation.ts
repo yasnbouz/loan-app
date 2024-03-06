@@ -14,7 +14,6 @@ export function createSchema(companyType: IcompanyType) {
     return z.object({
       trajetaFiscal: z.instanceof(File, { message: "required" }).refine((val) => val.size < 5_000_000, fileSizeMessage),
       certificadoCensal: z.instanceof(File, { message: "required" }).refine((val) => val.size < 5_000_000, fileSizeMessage),
-      modelo036: z.instanceof(File, { message: "required" }).refine((val) => val.size < 5_000_000, fileSizeMessage),
       modelo037: z.instanceof(File, { message: "required" }).refine((val) => val.size < 5_000_000, fileSizeMessage),
     });
   }

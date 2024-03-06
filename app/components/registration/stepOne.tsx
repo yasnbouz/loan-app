@@ -29,7 +29,7 @@ export function StepOne() {
     if (IsStepOneDone) {
       setSearchParams((prev) => {
         prev.set("step", "2");
-        prev.set("companyType", `${companyType.value}`);
+        prev.set("company-type", `${companyType.value}`);
         prev.set("id", companyID);
         return prev;
       });
