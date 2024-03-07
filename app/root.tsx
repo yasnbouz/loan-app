@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
 import styles from "./styles/tailwind.css?url";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
@@ -20,8 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  
-  
+
   return {
     theme: getTheme(),
     session,

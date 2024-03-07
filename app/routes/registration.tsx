@@ -6,7 +6,7 @@ import {
   unstable_parseMultipartFormData,
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
-} from "@remix-run/node";
+} from "@vercel/remix";
 import Layout from "@/components/shared/layout";
 import { createClient } from "@/.server/supabase";
 import Stepper, { IStep } from "@/components/stepper";

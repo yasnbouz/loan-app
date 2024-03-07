@@ -1,5 +1,5 @@
 import { createClient } from "@/.server/supabase";
-import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
+import { redirect, type LoaderFunctionArgs } from "@vercel/remix";
 import { type EmailOtpType } from "@supabase/supabase-js";
 
 export async function loader({ request }: LoaderFunctionArgs) {

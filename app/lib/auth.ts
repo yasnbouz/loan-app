@@ -1,5 +1,5 @@
 import { createClient } from "@/.server/supabase";
-import { redirect } from "@remix-run/node";
+import { redirect } from "@vercel/remix";
 import { Session } from "@supabase/supabase-js";
 
 export async function checkSession(request: Request): Promise<Session | null> {

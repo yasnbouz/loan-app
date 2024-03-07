@@ -1,5 +1,6 @@
 import { createServerClient, serialize, parse } from "@supabase/ssr";
 import { Database } from "./db-types";
+import "dotenv/config";
 
 export function createClient(request: Request) {
   const cookies = parse(request.headers.get("Cookie") ?? "");

@@ -1,0 +1,157 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs-eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/action.set-theme": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/create-account": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth.confirm": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/registration": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/logout": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/login": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/action.set-theme": {
+        "path": "action/set-theme",
+        "id": "routes/action.set-theme",
+        "parentId": "root",
+        "file": "app/routes/action.set-theme.ts",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/create-account": {
+        "path": "create-account",
+        "id": "routes/create-account",
+        "parentId": "root",
+        "file": "app/routes/create-account.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth.confirm": {
+        "path": "auth/confirm",
+        "id": "routes/auth.confirm",
+        "parentId": "root",
+        "file": "app/routes/auth.confirm.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/registration": {
+        "path": "registration",
+        "id": "routes/registration",
+        "parentId": "root",
+        "file": "app/routes/registration.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/logout": {
+        "path": "logout",
+        "id": "routes/logout",
+        "parentId": "root",
+        "file": "app/routes/logout.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_index": {
+        "index": true,
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "app/routes/_index.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/login": {
+        "path": "login",
+        "id": "routes/login",
+        "parentId": "root",
+        "file": "app/routes/login.tsx",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "remixConfig": {
+    "appDirectory": "D:\\Workshops\\HOSSAM\\loan-app\\app",
+    "basename": "/",
+    "buildDirectory": "D:\\Workshops\\HOSSAM\\loan-app\\build",
+    "future": {
+      "v3_fetcherPersist": false,
+      "v3_relativeSplatPath": false,
+      "v3_throwAbortReason": false
+    },
+    "manifest": false,
+    "publicPath": "/",
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/action.set-theme": {
+        "path": "action/set-theme",
+        "id": "routes/action.set-theme",
+        "parentId": "root",
+        "file": "routes/action.set-theme.ts"
+      },
+      "routes/create-account": {
+        "path": "create-account",
+        "id": "routes/create-account",
+        "parentId": "root",
+        "file": "routes/create-account.tsx"
+      },
+      "routes/auth.confirm": {
+        "path": "auth/confirm",
+        "id": "routes/auth.confirm",
+        "parentId": "root",
+        "file": "routes/auth.confirm.tsx"
+      },
+      "routes/registration": {
+        "path": "registration",
+        "id": "routes/registration",
+        "parentId": "root",
+        "file": "routes/registration.tsx"
+      },
+      "routes/logout": {
+        "path": "logout",
+        "id": "routes/logout",
+        "parentId": "root",
+        "file": "routes/logout.tsx"
+      },
+      "routes/_index": {
+        "index": true,
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "routes/_index.tsx"
+      },
+      "routes/login": {
+        "path": "login",
+        "id": "routes/login",
+        "parentId": "root",
+        "file": "routes/login.tsx"
+      }
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  }
+}

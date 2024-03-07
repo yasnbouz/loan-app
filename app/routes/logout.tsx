@@ -1,5 +1,5 @@
 import { createClient } from "@/.server/supabase";
-import { json, type ActionFunctionArgs, redirect } from "@remix-run/node";
+import { json, type ActionFunctionArgs, redirect } from "@vercel/remix";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { supabase, headers } = createClient(request);
