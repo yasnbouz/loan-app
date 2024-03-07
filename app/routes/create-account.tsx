@@ -115,12 +115,12 @@ export default function SignUp() {
               />
               <TextField
                 labelProps={{ children: "Password" }}
-                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: "password" }) }}
+                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: togglePassword ? "text" : "password" }) }}
                 errors={fields.password.errors}
               />
               <TextField
                 labelProps={{ children: "Confirm Password" }}
-                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.confirmPassword, { type: "password" }) }}
+                inputProps={{ placeholder: "•••••••", ...getInputProps(fields.confirmPassword, { type: togglePassword ? "text" : "password" }) }}
                 errors={fields.confirmPassword.errors}
               />
               {form.allErrors["passwordNotMatch"] ? (
