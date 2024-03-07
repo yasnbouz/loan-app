@@ -16,7 +16,7 @@ export function LoanCard() {
     minLoan = 4000;
   const [loanSlider, setLoanSlider] = useState(maxLoan);
   const [loanInput, setLoanInput] = useState(maxLoan);
-  const [TIN, setTIN] = useState(4.45);
+  const [TIN] = useState(4.45);
 
   function handleLoanSliderChange(loan: number) {
     setLoanSlider(loan);

@@ -30,7 +30,7 @@ export function StepThree() {
         return prev;
       });
     }
-  }, [IsStepThreeDone]);
+  }, [IsStepThreeDone, setSearchParams]);
 
   return (
     <Card className="w-11/12">

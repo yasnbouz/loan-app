@@ -33,7 +33,7 @@ export function StepTwo() {
         return prev;
       });
     }
-  }, [IsStepTwoDone]);
+  }, [IsStepTwoDone, setSearchParams]);
 
   return (
     <Card className="w-11/12">

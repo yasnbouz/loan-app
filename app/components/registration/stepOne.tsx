@@ -34,7 +34,7 @@ export function StepOne() {
         return prev;
       });
     }
-  }, [IsStepOneDone]);
+  }, [IsStepOneDone, companyID, companyType.value, setSearchParams]);
   return (
     <Card className="w-11/12">
       <Form {...getFormProps(form)} method="POST" encType="multipart/form-data">

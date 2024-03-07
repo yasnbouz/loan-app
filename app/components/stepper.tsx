@@ -13,7 +13,7 @@ export default function Stepper({ currentStep = 1, steps = [] }: IStepper) {
   const activeStep = Math.min(Math.max(currentStep, 1), numberOfSteps + 1);
   return (
     <nav aria-label="Progress">
-      <ol role="list" className="flex items-center">
+      <ol className="flex items-center">
         {steps.map((step, stepIdx) => (
           <li key={step.name} className={cn(stepIdx !== steps.length - 1 ? "pr-8 sm:pr-20" : "", "relative")}>
             {stepIdx + 1 < activeStep ? (

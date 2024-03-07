@@ -46,7 +46,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await unstable_parseMultipartFormData(request, uploadHandler);
   const intent = formData.get("intent");
   switch (intent) {
-    case "stepOne":
+    case "stepOne": {
       const idCardOrPassPath = String(formData.get("idCardOrPass"));
       const idCardOrPassWithSelfiePath = String(formData.get("idCardOrPassWithSelfie"));
       const companyType = String(formData.get("CompanyType"));
@@ -58,7 +58,8 @@ export async function action({ request }: ActionFunctionArgs) {
         return json({ stepOne: true, id: data?.[0]?.id });
       }
       break;
-    case "stepTwo":
+    }
+    case "stepTwo": {
       const url = new URL(request.url);
 
       const businessID = String(url.searchParams.get("id"));
@@ -72,11 +73,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
       if (error) throw error;
       return json({ stepTwo: true });
+    }
 
-    case "stepThree":
+    case "stepThree": {
       const iban = formData.get("iban");
       console.log(iban);
       return json({ stepThree: true });
+    }
   }
 
   return null;

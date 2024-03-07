@@ -28,12 +28,10 @@ module.exports = {
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
       plugins: ["react", "jsx-a11y"],
-      extends: [
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
-      ],
+      extends: ["plugin:react/recommended", "plugin:react/jsx-runtime", "plugin:react-hooks/recommended", "plugin:jsx-a11y/recommended"],
+      rules: {
+        "react/prop-types": "off",
+      },
       settings: {
         react: {
           version: "detect",
@@ -54,8 +52,11 @@ module.exports = {
       files: ["**/*.{ts,tsx}"],
       plugins: ["@typescript-eslint", "import"],
       parser: "@typescript-eslint/parser",
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
       settings: {
-        "import/internal-regex": "^~/",
+        "import/internal-regex": "^@/",
         "import/resolver": {
           node: {
             extensions: [".ts", ".tsx"],
@@ -65,11 +66,7 @@ module.exports = {
           },
         },
       },
-      extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
-      ],
+      extends: ["plugin:@typescript-eslint/recommended", "plugin:import/recommended", "plugin:import/typescript"],
     },
 
     // Node

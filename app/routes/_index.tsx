@@ -1,12 +1,10 @@
 import { loanSessionStorage } from "@/.server/sessions";
-import Brands from "@/components/brands";
 import FAQS from "@/components/faqs";
 import Hero from "@/components/hero";
 import Requirements from "@/components/requirements";
 import Reviews from "@/components/reviews";
 import TrustUs from "@/components/trustUs";
-import { redirect, type MetaFunction } from "@vercel/remix";
-import type { ActionFunctionArgs } from "@vercel/remix";
+import { redirect, type MetaFunction , ActionFunctionArgs } from "@vercel/remix";
 import Layout from "@/components/shared/layout";
 
 export const meta: MetaFunction = () => {

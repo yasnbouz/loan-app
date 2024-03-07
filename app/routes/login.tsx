@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { TextField, ErrorMessage } from "@/components/ui/form";
 import { z } from "zod";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { json, redirect, useActionData, useNavigation, Form, useParams, useSearchParams } from "@remix-run/react";
+import { json, redirect, useActionData, useNavigation, Form, useSearchParams } from "@remix-run/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { createClient } from "@/.server/supabase";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
