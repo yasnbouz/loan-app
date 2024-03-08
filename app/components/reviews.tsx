@@ -1,6 +1,6 @@
 const testimonials = [
   {
-    body: "I’m so glad I chose Loan Money for my loan. Their transparent pricing and superior customer service have made me a customer for life.",
+    body: "I’m so glad I chose Moneyeget for my loan. Their transparent pricing and superior customer service have made me a customer for life.",
     author: {
       name: " Aurelio Vicente",
       handle: "aureliovicente",
@@ -8,7 +8,7 @@ const testimonials = [
     },
   },
   {
-    body: "I’m thrilled with the fast and easy loan process at Loan Money. Their customer service is top-notch and they truly care about their customers’ needs.",
+    body: "I’m thrilled with the fast and easy loan process at Moneyeget. Their customer service is top-notch and they truly care about their customers’ needs.",
     author: {
       name: " Raúl Valero",
       handle: " raúlvalero",
@@ -16,7 +16,7 @@ const testimonials = [
     },
   },
   {
-    body: "Loan Money has been a lifesaver! Their low-interest rates and flexible repayment options made my financial situation much more manageable.",
+    body: "Moneyeget has been a lifesaver! Their low-interest rates and flexible repayment options made my financial situation much more manageable.",
     author: {
       name: " Amanda Anunciación",
       handle: "amandaanunciación",
@@ -24,7 +24,7 @@ const testimonials = [
     },
   },
   {
-    body: "I highly recommend Loan Money. They offer quick approval and transparent terms. It’s refreshing to deal with such a trustworthy lender.",
+    body: "I highly recommend Moneyeget. They offer quick approval and transparent terms. It’s refreshing to deal with such a trustworthy lender.",
     author: {
       name: " Amadeo Sixto",
       handle: "amadeosixto",
@@ -32,7 +32,7 @@ const testimonials = [
     },
   },
   {
-    body: "Loan Money’s easy-to-understand terms and no hidden fees policy are a breath of fresh air. They are truly a customer-first company.",
+    body: "Moneyeget easy-to-understand terms and no hidden fees policy are a breath of fresh air. They are truly a customer-first company.",
     author: {
       name: " Isabel Bienvenida",
       handle: "isabelbienvenida",
@@ -40,7 +40,7 @@ const testimonials = [
     },
   },
   {
-    body: "I’ve taken out a few loans in my time, but none as smooth and hassle-free as with Loan Money. Their friendly staff and efficient service are second to none.",
+    body: "I’ve taken out a few loans in my time, but none as smooth and hassle-free as with Moneyeget. Their friendly staff and efficient service are second to none.",
     author: {
       name: " Isidora Áurea",
       handle: "isidoraaurea ",

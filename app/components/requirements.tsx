@@ -5,7 +5,7 @@ export default function Requirements() {
         <h2 className="text-3xl font-bold pb-4 tracking-tight text-primary sm:text-4xl">Requirements for applying for an online loan in BRAND Spain</h2>
         <div className="text-lg space-y-4 leading-8 text-muted-foreground">
           <p className="mt-6 max-w-[75ch]">
-            BRANDNAME is an innovative online loan service in Spain. Now any citizen over the age of 18 can get their money online in less than 15 minutes thanks to our easy and
+            Moneyeget is an innovative online loan service in Spain. Now any citizen over the age of 18 can get their money online in less than 15 minutes thanks to our easy and
             fast loans.
           </p>
           <p className="">To achieve this you just need:</p>

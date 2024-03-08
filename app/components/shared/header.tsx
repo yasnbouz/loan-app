@@ -35,7 +35,7 @@ export default function Header() {
         <nav className="mx-auto max-w-7xl flex items-center justify-between py-6" aria-label="Global">
           <div className="flex lg:flex-1">
             <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Money eget</span>
+              <span className="sr-only">Moneyeget</span>
               <Logo />
             </Link>
           </div>
@@ -46,9 +46,9 @@ export default function Header() {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigationList.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground">
+              <Link key={item.name} to={item.href} className="text-sm font-semibold leading-6 text-foreground">
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="hidden lg:items-center lg:gap-x-3 lg:flex lg:flex-1 lg:justify-end">

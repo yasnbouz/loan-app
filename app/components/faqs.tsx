@@ -2,8 +2,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqs = [
   {
-    question: "What is the eligibility criteria for applying for a loan at Loan Money?",
-    answer: "At Loan Money, we require applicants to be over 18 years old, have a stable income, and meet our creditworthiness criteria.",
+    question: "What is the eligibility criteria for applying for a loan at Moneyeget?",
+    answer: "At Moneyeget, we require applicants to be over 18 years old, have a stable income, and meet our creditworthiness criteria.",
   },
   {
     question: "What documents do I need to apply for a loan?",
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "Are there any hidden fees?",
-    answer: "At Loan Money, we believe in transparency. All our fees are clearly stated in our loan agreement. There are no hidden charges.",
+    answer: "At Moneyeget, we believe in transparency. All our fees are clearly stated in our loan agreement. There are no hidden charges.",
   },
   {
     question: "Can I repay my loan early?",
