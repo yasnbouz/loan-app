@@ -1,3 +1,5 @@
+import Logo from "@/components/shared/logo";
+
 const navigation = {
   solutions: [
     { name: "Marketing", href: "#" },
@@ -97,7 +99,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl pb-8 pt-16 sm:pt-24 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <img className="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600" alt="Company name" />
+            <Logo />
             <p className="text-sm leading-6 text-muted-foreground">Making the world a better place through constructing elegant hierarchies.</p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (

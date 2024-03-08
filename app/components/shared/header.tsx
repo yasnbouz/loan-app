@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/ui/modeToggle";
 import { Form, Link, useNavigation, useOutletContext } from "@remix-run/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Logo from "@/components/shared/logo";
 
 const navigationList = [
   { name: "Product", href: "/" },
@@ -34,8 +35,8 @@ export default function Header() {
         <nav className="mx-auto max-w-7xl flex items-center justify-between py-6" aria-label="Global">
           <div className="flex lg:flex-1">
             <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600" alt="" />
+              <span className="sr-only">Money eget</span>
+              <Logo />
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -83,7 +84,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600" alt="" />
+              <img className="h-8 w-auto" src="" alt="" />
             </Link>
             <button type="button" className="-m-2.5 rounded-md p-2.5 text-foreground" onClick={() => setMobileMenuOpen(false)}>
               <span className="sr-only">Close menu</span>
