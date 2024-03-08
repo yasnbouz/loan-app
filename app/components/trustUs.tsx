@@ -28,7 +28,7 @@ export default function TrustUs() {
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Why choose us for your online personal loan?</h2>
           <p className="mt-6 text-lg leading-8 mx-auto max-w-2xl text-muted-foreground">
-            You're more than your credit score—Our model looks at factors such as your education and employment to help you get a rate you deserve.
+            You&apos;re more than your credit score—Our model looks at factors such as your education and employment to help you get a rate you deserve.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
