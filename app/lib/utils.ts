@@ -12,25 +12,24 @@ export const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-export function calculateAmortizedLoan(principal: number, interestRate: number, termInMonths: number) {
-  // Input validation for numerical values
-  if (isNaN(principal) || isNaN(interestRate) || isNaN(termInMonths)) {
-    return { error: "Invalid input: All values must be numbers." };
-  }
+export function calculateLoan(principal: number, interestRate: number, months: number) {
+  // Calculate the monthly payment
+  const monthlyPayment = (principal * interestRate * Math.pow(1 + interestRate, months)) / (Math.pow(1 + interestRate, months) - 1);
 
-  // Calculate monthly interest rate
-  const monthlyInterestRate = interestRate / 100 / 12;
+  // calculate total interest paid
+  const totalinterest = monthlyPayment * months - principal;
 
-  // Calculate monthly payment using the PMT formula
-  const payment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -termInMonths));
+  // total loan
 
-  // Calculate total interest paid
-  const totalInterest = payment * termInMonths - principal;
-
-  const total = principal + totalInterest;
+  const total = principal + totalinterest;
+  const parsed = {
+    monthlyPayment: Number(monthlyPayment).toFixed(2),
+    totalinterest: Number(totalinterest).toFixed(2),
+    total: Number(total).toFixed(2),
+  };
   return {
-    monthlyPayment: new Intl.NumberFormat().format(payment),
-    totalInterest: new Intl.NumberFormat().format(totalInterest),
-    total: new Intl.NumberFormat().format(total),
+    monthlyPayment: new Intl.NumberFormat().format(+parsed.monthlyPayment),
+    totalInterest: new Intl.NumberFormat().format(+parsed.totalinterest),
+    total: new Intl.NumberFormat().format(+parsed.total),
   };
 }

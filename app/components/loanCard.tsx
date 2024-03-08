@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { calculateAmortizedLoan } from "@/lib/utils";
+import { calculateLoan } from "@/lib/utils";
 import { useState } from "react";
 import { addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -12,26 +12,32 @@ import { Form, useNavigation } from "@remix-run/react";
 
 export function LoanCard() {
   /************* loan logic *********** */
-  const maxLoan = 35000,
-    minLoan = 4000;
-  const [loanSlider, setLoanSlider] = useState(maxLoan);
-  const [loanInput, setLoanInput] = useState(maxLoan);
-  const [TIN] = useState(4.45);
+  const minPrincipal = 4000;
+  const maxPrincipal = 35000;
+  const minRate = 4.5 / 100;
+  const maxRate = 9.45 / 100;
+
+  const [loanSlider, setLoanSlider] = useState(maxPrincipal);
+  const [loanInput, setLoanInput] = useState(maxPrincipal);
+
+  // Calculate the interest rate based on the principal
+  const interestRate = ((maxPrincipal - loanSlider) / (maxPrincipal - minPrincipal)) * (maxRate - minRate) + minRate;
+  const TIN = Number(interestRate * 100).toFixed(2);
 
   function handleLoanSliderChange(loan: number) {
     setLoanSlider(loan);
     setLoanInput(loan);
   }
   function onLoanInputBlur(loan: number) {
-    if (loan >= minLoan && loan <= maxLoan) {
+    if (loan >= minPrincipal && loan <= maxPrincipal) {
       handleLoanSliderChange(loan);
     }
 
-    if (loan > maxLoan) {
-      handleLoanSliderChange(maxLoan);
+    if (loan > maxPrincipal) {
+      handleLoanSliderChange(maxPrincipal);
     }
-    if (loan < minLoan) {
-      handleLoanSliderChange(minLoan);
+    if (loan < minPrincipal) {
+      handleLoanSliderChange(minPrincipal);
     }
   }
   /**************months logic ********** */
@@ -58,7 +64,8 @@ export function LoanCard() {
     }
   }
   /***********calculate loan************ */
-  const { monthlyPayment, total, totalInterest } = calculateAmortizedLoan(loanSlider, TIN, monthsSlider);
+
+  const { monthlyPayment, total, totalInterest } = calculateLoan(loanSlider, interestRate, monthsSlider);
   /**********optimist ui************* */
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/?index";
@@ -114,7 +121,7 @@ export function LoanCard() {
                 <input type="hidden" name="date_of_return" value={dateOfReturn} />
               </div>
               <div className="flex justify-between">
-                <p>TIN 4,45%</p>
+                <p>TIN {TIN}%</p>
                 <time className="font-medium">Commission opening 0.00&euro;</time>
               </div>
               <div className="flex justify-between">
