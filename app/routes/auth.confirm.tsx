@@ -6,7 +6,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request.url);
   const token_hash = requestUrl.searchParams.get("token_hash");
   const type = requestUrl.searchParams.get("type") as EmailOtpType | null;
-  const next = requestUrl.searchParams.get("next") || "/join";
+  const next = requestUrl.searchParams.get("next") || "/registration";
   const headers = new Headers();
 
   if (token_hash && type) {
@@ -23,5 +23,5 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   // return the user to an error page with instructions
-  return redirect("/auth/auth-code-error", { headers });
+  return redirect("/", { headers });
 }
