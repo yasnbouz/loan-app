@@ -6,11 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { action } from "@/routes/registration";
 import { getFormProps, useForm, useInputControl, getInputProps } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { Form, useActionData, useNavigation, useSearchParams } from "@remix-run/react";
-import { useEffect } from "react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
 export function StepOne() {
-  const [, setSearchParams] = useSearchParams();
   const lastResult = useActionData<typeof action>() as any;
   const [form, fields] = useForm({
     lastResult,
@@ -18,23 +16,10 @@ export function StepOne() {
       return parseWithZod(formData, { schema: schemaStepOne });
     },
   });
-  const companyID = lastResult?.id;
   const companyType = useInputControl(fields.CompanyType);
-  const IsStepOneDone = lastResult?.stepOne === true;
 
   const navigation = useNavigation();
   const isSubmitting = navigation.formAction === "/registration" || navigation.formAction === "/registration?step=1";
-
-  useEffect(() => {
-    if (IsStepOneDone) {
-      setSearchParams((prev) => {
-        prev.set("step", "2");
-        prev.set("company-type", `${companyType.value}`);
-        prev.set("id", companyID);
-        return prev;
-      });
-    }
-  }, [IsStepOneDone, companyID, companyType.value, setSearchParams]);
   return (
     <Card className="w-11/12">
       <Form {...getFormProps(form)} method="POST" encType="multipart/form-data">

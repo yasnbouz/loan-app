@@ -6,34 +6,21 @@ import { action } from "@/routes/registration";
 import { useForm, getInputProps, getFormProps } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { Form, useActionData, useNavigation, useSearchParams } from "@remix-run/react";
-import { useEffect } from "react";
 
 export function StepTwo() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const companyType = (searchParams.get("company-type") || "autonomo") as IcompanyType;
 
   const lastResult = useActionData<typeof action>() as any;
-  const IsStepTwoDone = lastResult?.stepTwo === true;
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.formAction === `/registration?step=2&company-type=${companyType}&id=${searchParams.get("id")}`;
-
+  const isSubmitting = navigation.formAction === `/registration?step=2&company-type=${companyType}`;
   const [form, fields] = useForm({
     lastResult,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: createSchema(companyType) });
     },
   });
-  useEffect(() => {
-    if (IsStepTwoDone) {
-      setSearchParams((prev) => {
-        prev.delete("company-type");
-        prev.delete("id");
-        prev.set("step", "3");
-        return prev;
-      });
-    }
-  }, [IsStepTwoDone, setSearchParams]);
 
   return (
     <Card className="w-11/12">

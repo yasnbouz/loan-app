@@ -2,10 +2,10 @@ import { useSearchParams } from "@remix-run/react";
 import {
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
-  json,
   unstable_parseMultipartFormData,
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
+  redirect,
 } from "@vercel/remix";
 import Layout from "@/components/shared/layout";
 import { createClient } from "@/.server/supabase";
@@ -14,7 +14,6 @@ import { nanoid } from "nanoid";
 import { asyncIterableToStream } from "@/lib/iterableToStream";
 import { StepOne } from "@/components/registration/stepOne";
 import { StepTwo } from "@/components/registration/stepTwo";
-import { StepThree } from "@/components/registration/stepThree";
 import { Success } from "@/components/registration/success";
 import { checkSession } from "@/lib/auth";
 
@@ -26,6 +25,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const { supabase } = createClient(request);
 
   const session = await checkSession(request);
+  const user_id = String(session?.user?.id);
 
   // supabase upload handler
   const uploadHandler = unstable_composeUploadHandlers(async (file) => {
@@ -50,41 +50,34 @@ export async function action({ request }: ActionFunctionArgs) {
       const idCardOrPassPath = String(formData.get("idCardOrPass"));
       const idCardOrPassWithSelfiePath = String(formData.get("idCardOrPassWithSelfie"));
       const companyType = String(formData.get("CompanyType"));
-      const user_id = String(session?.user?.id);
 
       if (idCardOrPassPath && idCardOrPassWithSelfiePath && companyType) {
-        const { error, data } = await supabase.from("business").insert({ user_id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType }).select();
+        const { error } = await supabase.from("business").upsert({ user_id, idCardOrPassPath, idCardOrPassWithSelfiePath, companyType }, { onConflict: "user_id" }).select();
         if (error) throw error;
-        return json({ stepOne: true, id: data?.[0]?.id });
+        return redirect(`/registration?step=2&company-type=${companyType}`);
       }
       break;
     }
     case "stepTwo": {
-      const url = new URL(request.url);
-
-      const businessID = String(url.searchParams.get("id"));
       const trajetaFiscal = String(formData.get("trajetaFiscal"));
       const certificadoCensal = String(formData.get("certificadoCensal"));
       const modelo036 = String(formData.get("modelo036"));
       const modelo037 = String(formData.get("modelo037"));
       const escrituraEmpresa = String(formData.get("escrituraEmpresa"));
 
-      const { error } = await supabase.from("business").update({ trajetaFiscal, certificadoCensal, modelo036, modelo037, escrituraEmpresa }).eq("id", businessID);
+      const { error } = await supabase
+        .from("business")
+        .upsert({ user_id, trajetaFiscal, certificadoCensal, modelo036, modelo037, escrituraEmpresa }, { onConflict: "user_id" })
+        .select();
 
       if (error) throw error;
-      return json({ stepTwo: true });
-    }
-
-    case "stepThree": {
-      const iban = formData.get("iban");
-      console.log(iban);
-      return json({ stepThree: true });
+      return redirect("/registration?step=3");
     }
   }
 
   return null;
 }
-const steps: IStep[] = [{ name: "Step 1" }, { name: "Step 2" }, { name: "Step 3" }];
+const steps: IStep[] = [{ name: "Step 1" }, { name: "Step 2" }];
 
 export default function Join() {
   const [searchParams] = useSearchParams();
@@ -102,9 +95,6 @@ export default function Join() {
       renderSteps = <StepTwo />;
       break;
     case 3:
-      renderSteps = <StepThree />;
-      break;
-    case 4:
       renderSteps = <Success />;
       break;
   }
@@ -113,7 +103,7 @@ export default function Join() {
     <Layout>
       <div className="max-w-xl mx-auto">
         <div className="flex flex-col items-center gap-y-20">
-          <Stepper steps={steps} currentStep={currentStep} />
+          {currentStep !== 3 && <Stepper steps={steps} currentStep={currentStep} />}
           {renderSteps}
         </div>
       </div>
