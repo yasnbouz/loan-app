@@ -10,9 +10,9 @@ const themeSessionStorage = createCookieSessionStorage({
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    secrets: ["s3cr3t"],
+    secrets: ["36b797ec-30d6-45a9-9d63-8aac94d4d8fd"],
     // Set domain and secure only if in production
-    ...(isProduction ? { domain: process.env.SITE_URL, secure: true } : {}),
+    ...(isProduction ? { domain: process.env.SITE_DOMIN, secure: true } : {}),
   },
 });
 
@@ -27,8 +27,8 @@ export const loanSessionStorage = createCookieSessionStorage({
     httpOnly: true,
     maxAge: 60 * 60 * 24,
     sameSite: "lax",
-    secrets: ["ef8e4f"],
+    secrets: ["e92651d1-c5c2-41ef-acb4-a20078afe775"],
     // Set domain and secure only if in production
-    ...(isProduction ? { domain: process.env.SITE_URL, secure: true } : {}),
+    ...(isProduction ? { domain: process.env.SITE_DOMIN, secure: true } : {}),
   },
 });
