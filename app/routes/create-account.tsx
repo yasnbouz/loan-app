@@ -110,7 +110,7 @@ export default function SignUp() {
               />
               <TextField
                 labelProps={{ children: "Email" }}
-                inputProps={{ placeholder: "you@example.com", ...getInputProps(fields.email, { type: "email" }) }}
+                inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
                 errors={fields.email.errors}
               />
               <TextField
