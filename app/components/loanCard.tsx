@@ -133,7 +133,7 @@ export function LoanCard() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button disabled={isSubmitting} type="submit" isFullWidth className="font-bold">
-            {isSubmitting ? "Starting..." : "Start"}
+            {isSubmitting ? "PEDIR PRÉSTAMO..." : "PEDIR PRÉSTAMO"}
           </Button>
         </CardFooter>
       </Card>

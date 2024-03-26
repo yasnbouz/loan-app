@@ -7,9 +7,9 @@ export default function Hero() {
         <div className="lg:col-span-2">
           <div className="mx-auto max-w-2xl">
             <div className="max-w-lg">
-              <h1 className="mt-10 text-4xl font-bold tracking-tight text-accent-foreground sm:text-5xl">Request your Online Personal Loan up to 35,000</h1>
+              <h1 className="mt-10 text-4xl font-bold tracking-tight text-accent-foreground sm:text-6xl">Empowering Businesses with Financial Solutions</h1>
               <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
+                Your premier destination for tailored business financing. Unlock your company&apos;s potential with hassle-free lending solutions.
               </p>
             </div>
           </div>
