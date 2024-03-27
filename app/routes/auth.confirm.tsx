@@ -6,7 +6,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request.url);
   const token_hash = requestUrl.searchParams.get("token_hash");
   const type = requestUrl.searchParams.get("type") as EmailOtpType | null;
-  const next = requestUrl.searchParams.get("next") || "/registration";
+  const next = requestUrl.searchParams.get("next") || "/login";
   const headers = new Headers();
 
   if (token_hash && type) {
