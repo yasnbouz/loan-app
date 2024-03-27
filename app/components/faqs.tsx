@@ -2,36 +2,38 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqs = [
   {
-    question: "What is the eligibility criteria for applying for a loan at Moneyeget?",
-    answer: "At Moneyeget, we require applicants to be over 18 years old, have a stable income, and meet our creditworthiness criteria.",
+    question: "Cuáles son los criterios de elegibilidad para solicitar un préstamo en Moneyeget?",
+    answer: "En Moneyeget, requerimos que los solicitantes sean mayores de 18 años, tengan un ingreso estable y cumplan con nuestros criterios de solvencia.",
   },
   {
-    question: "What documents do I need to apply for a loan?",
-    answer: "You’ll need proof of identity, proof of income, and proof of address. Please check our website for the specific documents we accept.",
+    question: "Qué documentos necesito para solicitar un préstamo?",
+    answer:
+      "Necesitará un comprobante de identidad, un comprobante de ingresos y un comprobante de domicilio. Consulte nuestro sitio web para obtener los documentos específicos que aceptamos.",
   },
   {
-    question: "How long does it take to process my loan application?",
-    answer: "We strive to process applications within 24-48 hours. However, this may vary depending on the completeness of your application and documents.",
+    question: "Cuánto tiempo se tarda en procesar mi solicitud de préstamo?",
+    answer: "Nos esforzamos por procesar las solicitudes dentro de las 24-48 horas. Sin embargo, esto puede variar dependiendo de la integridad de su solicitud y documentos.",
   },
   {
-    question: "What are the interest rates for your loans?",
-    answer: "Our interest rates vary depending on the type of loan and your credit score. Please visit our website for detailed information.",
+    question: "Cuáles son las tasas de interés para sus préstamos?",
+    answer: "Nuestras tasas de interés varían dependiendo del tipo de préstamo y su puntaje de crédito. Visite nuestro sitio web para obtener información detallada.",
   },
   {
-    question: "Are there any hidden fees?",
-    answer: "At Moneyeget, we believe in transparency. All our fees are clearly stated in our loan agreement. There are no hidden charges.",
+    question: "Hay algún cargo oculto?",
+    answer: "En Moneyeget creemos en la transparencia. Todas nuestras tarifas están claramente establecidas en nuestro contrato de préstamo. No hay cargos ocultos.",
   },
   {
-    question: "Can I repay my loan early?",
-    answer: "Yes, you can repay your loan early without any prepayment penalties.",
+    question: "Puedo pagar mi préstamo antes?",
+    answer: "Sí, usted puede pagar su préstamo temprano sin ninguna penalización de prepago.",
   },
   {
-    question: "What happens if I miss a payment?",
-    answer: "If you miss a payment, you may incur late payment fees. Please contact our customer service team if you’re having difficulties making payments.",
+    question: "Qué sucede si pierdo un pago?",
+    answer:
+      "Si no realiza un pago, puede incurrir en cargos por pago tardío. Póngase en contacto con nuestro equipo de servicio al cliente si tiene dificultades para realizar los pagos.",
   },
   {
-    question: "How can I contact customer service?",
-    answer: "Our customer service team is available via phone, email, and live chat on our website. We’re here to help!",
+    question: "Cómo puedo contactar con el servicio al cliente?",
+    answer: "Nuestro equipo de atención al cliente está disponible por teléfono, correo electrónico y chat en vivo en nuestro sitio web. ¡Estamos aquí para ayudarle!",
   },
   // More questions...
 ];
@@ -41,7 +43,7 @@ export default function FAQS() {
     <div>
       <div className="mx-auto max-w-7xl py-24 sm:py-32">
         <div className="divide-y divide-gray-900/10">
-          <h2 className="text-3xl font-bold leading-10 tracking-tight text-foreground md:text-4xl">Frequently asked questions</h2>
+          <h2 className="text-3xl font-bold leading-10 tracking-tight text-foreground md:text-4xl">preguntas más frecuentes</h2>
           <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
             <Accordion type="single" collapsible>
               {faqs.map((faq) => (

@@ -74,8 +74,7 @@ export function LoanCard() {
     <Form method="post" action="/?index">
       <Card>
         <CardHeader>
-          <CardTitle>Personal loan simulator</CardTitle>
-          <CardDescription>Deploy your new project in one-click.</CardDescription>
+          <CardTitle>Simulador de prestamos personales</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
@@ -94,39 +93,39 @@ export function LoanCard() {
               setMonthsInput={setMonthsInput}
             />
             <div className="flex justify-between items-center mt-2">
-              <p className="text-2xl">Monthly quota</p>
+              <p className="text-2xl">Cuota mensual</p>
               <div className="text-right">
                 <p className="text-2xl">
-                  {monthlyPayment} &euro;<span className="text-sm">/month</span>
+                  {monthlyPayment} &euro;<span className="text-sm">/mes</span>
                 </p>
                 <input type="hidden" name="monthly_quota" value={monthlyPayment} />
-                <span className="text-sm font-medium text-muted-foreground"> Total due {total} &euro;</span>
+                <span className="text-sm font-medium text-muted-foreground">Total vencida {total} &euro;</span>
                 <input type="hidden" name="total" value={total} />
               </div>
             </div>
             <Separator />
             <div className="grid gap-y-2 text-muted-foreground">
               <div className="flex justify-between">
-                <p>Inetest</p>
+                <p>Intereses</p>
                 <span className="font-bold">{totalInterest} &euro;</span>
                 <input type="hidden" name="interest" value={totalInterest} />
               </div>
               <div className="flex justify-between">
-                <p>Amount of the loan</p>
+                <p>Monto del préstamo</p>
                 <span className="font-bold">{Intl.NumberFormat().format(loanSlider)} &euro;</span>
               </div>
               <div className="flex justify-between">
-                <p>Date of return</p>
+                <p>Fecha de retorno</p>
                 <time className="font-medium">{dateOfReturn}</time>
                 <input type="hidden" name="date_of_return" value={dateOfReturn} />
               </div>
               <div className="flex justify-between">
                 <p>TIN {TIN}%</p>
-                <time className="font-medium">Commission opening 0.00&euro;</time>
+                <time className="font-medium">Apertura de la comisión 0.00&euro;</time>
               </div>
               <div className="flex justify-between">
                 <p>TAE 13,69%</p>
-                <time className="font-medium">Study Committee 0.00&euro;</time>
+                <time className="font-medium">Comité de estudio 0.00&euro;</time>
               </div>
             </div>
           </div>
@@ -143,7 +142,7 @@ export function LoanCard() {
 function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputBlur, setLoanInput }: Record<string, any>) {
   return (
     <div className="flex flex-col gap-y-4 md:gap-y-0">
-      <Label htmlFor="amount">How much you need?</Label>
+      <Label htmlFor="amount">Cuanto necesitas?</Label>
       <div className="grid gap-4 md:grid-cols-4">
         <Slider
           id="amount"
@@ -172,7 +171,7 @@ function LoanField({ loanSlider, handleLoanSliderChange, loanInput, onLoanInputB
 function MonthsField({ monthsSlider, monthsInput, handleMonthsSliderChange, onMonthsInputBlur, setMonthsInput }: Record<string, any>) {
   return (
     <div className="flex flex-col gap-y-4 md:gap-0">
-      <Label htmlFor="months">How many months?</Label>
+      <Label htmlFor="months">Cuántos meses?</Label>
       <div className="grid gap-4 md:grid-cols-4">
         <Slider
           id="months"
@@ -192,7 +191,7 @@ function MonthsField({ monthsSlider, monthsInput, handleMonthsSliderChange, onMo
             onBlur={(e) => onMonthsInputBlur(Number(e.target.value))}
             onChange={(e) => setMonthsInput(Number(e.target.value))}
           />
-          <span>months</span>
+          <span>meses</span>
         </div>
       </div>
     </div>

@@ -15,11 +15,11 @@ import Layout from "@/components/shared/layout";
 
 const schema = z
   .object({
-    fullName: z.string({ required_error: "Fullname is required" }).min(4, "must contain at least 4 character(s)"),
-    DNI: z.string({ required_error: "DNI is required" }),
-    phone: z.string({ required_error: "Phone is required" }),
-    email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
-    password: z.string({ required_error: "Password is required" }).min(6, "Password is too short"),
+    fullName: z.string({ required_error: "requerido" }).min(4, "debe contener al menos 4 carácter(s)"),
+    DNI: z.string({ required_error: "requerido" }),
+    phone: z.string({ required_error: "requerido" }),
+    email: z.string({ required_error: "requerido" }).email("Por favor, proporcione una dirección de correo electrónico correcta"),
+    password: z.string({ required_error: "requerido" }).min(6, "La contraseña es demasiado corta"),
     confirmPassword: z.string().min(6),
     terms: z
       .boolean()
@@ -28,7 +28,7 @@ const schema = z
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "The Passwords did not match", path: ["passwordNotMatch"] });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Las contraseñas no coincidían", path: ["passwordNotMatch"] });
     }
   });
 
@@ -82,8 +82,6 @@ export default function SignUp() {
   const [form, fields] = useForm({
     lastResult,
     constraint,
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithZod(formData, { schema });
     },
@@ -97,29 +95,29 @@ export default function SignUp() {
         <Form method="post" {...getFormProps(form)}>
           <Card>
             <CardHeader>
-              <CardTitle>Create your account</CardTitle>
-              <CardDescription>Now we need some data</CardDescription>
+              <CardTitle>Crear tu cuenta</CardTitle>
+              <CardDescription>Ahora necesitamos algunos datos</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <TextField labelProps={{ children: "Full name" }} inputProps={getInputProps(fields.fullName, { type: "text" })} errors={fields.fullName.errors} />
+              <TextField labelProps={{ children: "Nombre completo" }} inputProps={getInputProps(fields.fullName, { type: "text" })} errors={fields.fullName.errors} />
               <TextField labelProps={{ children: "DNI" }} inputProps={getInputProps(fields.DNI, { type: "text" })} errors={fields.DNI.errors} />
               <TextField
-                labelProps={{ children: "Phone" }}
+                labelProps={{ children: "Teléfono" }}
                 inputProps={{ placeholder: "+34 xxx xxx xxxx", ...getInputProps(fields.phone, { type: "tel" }) }}
                 errors={fields.phone.errors}
               />
               <TextField
-                labelProps={{ children: "Email" }}
+                labelProps={{ children: "Correo electrónico" }}
                 inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
                 errors={fields.email.errors}
               />
               <TextField
-                labelProps={{ children: "Password" }}
+                labelProps={{ children: "Contraseña" }}
                 inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: togglePassword ? "text" : "password" }) }}
                 errors={fields.password.errors}
               />
               <TextField
-                labelProps={{ children: "Confirm Password" }}
+                labelProps={{ children: "Confirmar contraseña" }}
                 inputProps={{ placeholder: "•••••••", ...getInputProps(fields.confirmPassword, { type: togglePassword ? "text" : "password" }) }}
                 errors={fields.confirmPassword.errors}
               />
@@ -132,25 +130,25 @@ export default function SignUp() {
               <div className="flex items-center gap-x-2">
                 <Checkbox id="showPassword" onCheckedChange={() => setTogglePassword(!togglePassword)} />
                 <Label htmlFor="showPassword" className="text-muted-foreground">
-                  {togglePassword ? "Hide password" : "Show password"}
+                  {togglePassword ? "ocultar la contraseña" : "Mostrar contraseña"}
                 </Label>
               </div>
               <div className="flex items-center gap-x-2">
                 <Checkbox id={fields.terms.id} name={fields.terms.name} aria-invalid={!!fields.terms.allErrors["terms"]} />
                 <Label htmlFor={fields.terms.id} className="text-muted-foreground">
-                  Accept{" "}
+                  aceptar{" "}
                   <Link to={"#"} className="text-primary underline">
-                    terms and conditions
+                    términos y condiciones
                   </Link>
                 </Label>
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button disabled={isSubmitting} type="submit">
-                {isSubmitting === true ? "Creating..." : "Create Account"}
+                {isSubmitting === true ? "Crear..." : "Crear Cuenta"}
               </Button>
               <Button type="reset" variant={"outline"}>
-                Clear
+                claro
               </Button>
             </CardFooter>
           </Card>

@@ -71,7 +71,7 @@ export default function Header() {
               </DropdownMenu>
             ) : (
               <Button asChild variant={"outline"}>
-                <Link to="/login">Log In</Link>
+                <Link to="/login">Iniciar sesión</Link>
               </Button>
             )}
             <ModeToggle />
@@ -109,7 +109,7 @@ export default function Header() {
                   </Form>
                 ) : (
                   <Button asChild variant={"outline"}>
-                    <Link to="/login">Log In</Link>
+                    <Link to="/login">Iniciar sesión</Link>
                   </Button>
                 )}
                 <ModeToggle />

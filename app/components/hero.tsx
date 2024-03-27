@@ -7,9 +7,9 @@ export default function Hero() {
         <div className="lg:col-span-2">
           <div className="mx-auto max-w-2xl">
             <div className="max-w-lg">
-              <h1 className="mt-10 text-4xl font-bold tracking-tight text-accent-foreground sm:text-6xl">Empowering Businesses with Financial Solutions</h1>
+              <h1 className="mt-10 text-4xl font-bold tracking-tight text-accent-foreground sm:text-6xl">Empoderar a las empresas con soluciones financieras</h1>
               <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                Your premier destination for tailored business financing. Unlock your company&apos;s potential with hassle-free lending solutions.
+                Su principal destino para financiación empresarial personalizada. Libere el potencial de su empresa con soluciones de préstamos sin complicaciones.
               </p>
             </div>
           </div>

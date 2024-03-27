@@ -13,14 +13,13 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 const schema = z.object({
-  email: z.string({ required_error: "Email is required" }).email("Please provide a correct email address"),
-  password: z.string({ required_error: "Password is required" }).min(6, "Password is too short"),
+  email: z.string({ required_error: "requerido" }).email("Por favor, proporcione una dirección de correo electrónico correcta"),
+  password: z.string({ required_error: "requerido" }).min(6, "La contraseña es demasiado corta"),
 });
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const submission = parseWithZod(formData, { schema });
-
   if (submission.status !== "success") {
     return json(submission.reply());
   }
@@ -43,8 +42,6 @@ export default function Login() {
   const [form, fields] = useForm({
     lastResult,
     constraint: getZodConstraint(schema),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithZod(formData, { schema });
     },
@@ -66,16 +63,16 @@ export default function Login() {
         <Form method="post" {...getFormProps(form)}>
           <Card>
             <CardHeader>
-              <CardTitle>Login to Moneyeget</CardTitle>
+              <CardTitle>Iniciar sesión en Moneyeget</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <TextField
-                labelProps={{ children: "Email" }}
+                labelProps={{ children: "Correo electrónico" }}
                 inputProps={{ placeholder: "info@example.com", ...getInputProps(fields.email, { type: "email" }) }}
                 errors={fields.email.errors}
               />
               <TextField
-                labelProps={{ children: "Password" }}
+                labelProps={{ children: "Contraseña" }}
                 inputProps={{ placeholder: "•••••••", ...getInputProps(fields.password, { type: "password" }) }}
                 errors={fields.password.errors}
               />
@@ -88,7 +85,7 @@ export default function Login() {
             </CardContent>
             <CardFooter>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Log In..." : "Log In"}
+                {isSubmitting ? "Iniciar sesión..." : "Iniciar sesión"}
               </Button>
             </CardFooter>
           </Card>

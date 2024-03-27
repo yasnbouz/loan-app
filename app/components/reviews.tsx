@@ -1,6 +1,6 @@
 const testimonials = [
   {
-    body: "I’m so glad I chose Moneyeget for my loan. Their transparent pricing and superior customer service have made me a customer for life.",
+    body: "Estoy muy contento de haber elegido Moneyeget para mi préstamo. Su precio transparente y servicio al cliente superior me han convertido en un cliente de por vida.",
     author: {
       name: " Aurelio Vicente",
       handle: "aureliovicente",
@@ -8,7 +8,7 @@ const testimonials = [
     },
   },
   {
-    body: "I’m thrilled with the fast and easy loan process at Moneyeget. Their customer service is top-notch and they truly care about their customers’ needs.",
+    body: "Estoy encantado con el proceso de préstamo rápido y fácil en Moneyeget. Su servicio al cliente es de primera categoría y realmente se preocupan por las necesidades de sus clientes.",
     author: {
       name: " Raúl Valero",
       handle: " raúlvalero",
@@ -16,7 +16,7 @@ const testimonials = [
     },
   },
   {
-    body: "Moneyeget has been a lifesaver! Their low-interest rates and flexible repayment options made my financial situation much more manageable.",
+    body: "Moneyeget ha sido un salvavidas! Sus bajas tasas de interés y opciones de pago flexibles hicieron mi situación financiera mucho más manejable.",
     author: {
       name: " Amanda Anunciación",
       handle: "amandaanunciación",
@@ -24,7 +24,7 @@ const testimonials = [
     },
   },
   {
-    body: "I highly recommend Moneyeget. They offer quick approval and transparent terms. It’s refreshing to deal with such a trustworthy lender.",
+    body: "Recomiendo encarecidamente Moneyeget. Ofrecen una rápida aprobación y términos transparentes. Es refrescante tratar con un prestamista tan confiable.",
     author: {
       name: " Amadeo Sixto",
       handle: "amadeosixto",
@@ -32,7 +32,7 @@ const testimonials = [
     },
   },
   {
-    body: "Moneyeget easy-to-understand terms and no hidden fees policy are a breath of fresh air. They are truly a customer-first company.",
+    body: "Moneyeget fácil de entender los términos y no hay política de tarifas ocultas son una bocanada de aire fresco. Son realmente una empresa de primera.",
     author: {
       name: " Isabel Bienvenida",
       handle: "isabelbienvenida",
@@ -40,7 +40,7 @@ const testimonials = [
     },
   },
   {
-    body: "I’ve taken out a few loans in my time, but none as smooth and hassle-free as with Moneyeget. Their friendly staff and efficient service are second to none.",
+    body: "He tomado algunos préstamos en mi tiempo, pero ninguno tan suave y sin problemas como con Moneyeget. Su amable personal y eficiente servicio son insuperables.",
     author: {
       name: " Isidora Áurea",
       handle: "isidoraaurea ",
@@ -55,8 +55,8 @@ export default function Reviews() {
     <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-lg font-semibold leading-8 tracking-tight text-primary">Testimonials</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">98% of satisfied customers last year</p>
+          <h2 className="text-lg font-semibold leading-8 tracking-tight text-primary">testimonios</h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">98% de clientes satisfechos el año pasado</p>
         </div>
         <div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
           <div className="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-3">
