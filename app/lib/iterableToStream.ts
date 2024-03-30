@@ -1,4 +1,4 @@
-import { MaxPartSizeExceededError } from "@vercel/remix";
+import { MaxPartSizeExceededError } from "@remix-run/node";
 
 export async function asyncIterableToStream(asyncIterable: AsyncIterable<Uint8Array>, filename: string, contentType: string) {
   const chunks = [];

@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteError, useRouteLoaderData } from "@remix-run/react";
 import styles from "./styles/tailwind.css?url";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";

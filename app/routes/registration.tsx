@@ -6,7 +6,7 @@ import {
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
   redirect,
-} from "@vercel/remix";
+} from "@remix-run/node";
 import Layout from "@/components/shared/layout";
 import { createClient } from "@/.server/supabase";
 import Stepper, { IStep } from "@/components/stepper";

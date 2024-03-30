@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ActionFunctionArgs } from "@vercel/remix";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { Form, MetaFunction, redirect, useActionData, useNavigation, Link } from "@remix-run/react";
 import { loanSessionStorage } from "@/.server/sessions";
 import { createClient } from "@/.server/supabase";

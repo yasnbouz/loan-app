@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs } from "@vercel/remix";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextField, ErrorMessage } from "@/components/ui/form";
