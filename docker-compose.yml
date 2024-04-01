@@ -1,12 +1,24 @@
 version: "3.7"
 
 services:
-  remix-app:
-    container_name: remix-app
-    build:
-      context: .
-      dockerfile: Dockerfile
+  remix:
+    container_name: ${HOST}
+    build: .
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
     env_file:
       - .env
+    restart: unless-stopped
+
+  nginx:
+    container_name: ${NGINX_HOST}
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - remix

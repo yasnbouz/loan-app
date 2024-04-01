@@ -34,4 +34,4 @@ COPY package.json ./
 RUN yarn --frozen-lockfile --prod && yarn cache clean
 
 
-CMD node ./server.js
+CMD ["node", "server.js"]
