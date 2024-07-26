@@ -1,38 +1,22 @@
-# Welcome to Remix!
 
-- [Remix Docs](https://remix.run/docs)
+## ⚡️ Quick Setup
 
-## Development
 
-From your terminal:
+- Clone the project
 
-```sh
-npm run dev
-```
+  ```bash
+    git clone https://github.com/yasnbouz/loan-app.git
+  ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+- Rename .env.example file to .env
 
-## Deployment
+## 🚀 Getting Started
 
-First, build your app for production:
 
-```sh
-npm run build
-```
+- Copy the below code to build and run the container
 
-Then run the app in production mode:
+  ```bash
+    docker compose up
+  ```
 
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
+- The project should now be available at [http://localhost:4000](http://localhost:4000)!
