@@ -148,7 +148,7 @@ export default function SignUp() {
                 {isSubmitting === true ? "Crear..." : "Crear Cuenta"}
               </Button>
               <Button type="reset" variant={"outline"}>
-                claro
+              limpiar
               </Button>
             </CardFooter>
           </Card>
